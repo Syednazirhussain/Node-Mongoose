@@ -6,25 +6,33 @@ const User = require('./../model/User')
 */
 exports.register = [
     check('name')
-        .exists()
-        .withMessage('MISSING')
         .not()
         .isEmpty()
-        .withMessage('IS_EMPTY'),
+        .withMessage('Name is required'),
     check('email')
-        .exists()
-        .withMessage('Please provide email address')
         .not()
         .isEmpty()
-        .withMessage('Email is not empty'),
+        .withMessage('Email is required')
+        .isEmail()
+        .withMessage('Email is not valid')
+        .custom(async value => {
+            let user = await User.findOne({ email: value })
+            if (user) {
+                return Promise.reject('Email already exist');
+            }
+        }),
     check('password')
-        .exists()
-        .withMessage('MISSING')
         .not()
         .isEmpty()
-        .withMessage('IS_EMPTY'),
+        .withMessage('Password is required'),
     (req, res, next) => {
-        validationResult(req, res, next)
+        // Finds the validation errors in this request and wraps them in an object with handy functions
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            res.json({ error: 1, errors: errors.array() })
+        } else {
+            next()
+        }
     }
 ]
 
@@ -57,7 +65,8 @@ exports.login = [
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             res.json({ error: 1, errors: errors.array() })
+        } else {
+            next()
         }
-        next()
     }
 ]

@@ -40,7 +40,8 @@ router.get(
 
 const { 
     userList,
-    userUpdate
+    userUpdate,
+    userDelete
 } = require('./../app/controller/api/UserController')
 
 router.get(
@@ -78,5 +79,11 @@ router.get(
     authenticateToken,
     commentList
 )
+router.delete(
+    '/user/delete', 
+    authenticateToken,
+    userDelete
+)
+
 
 module.exports = router

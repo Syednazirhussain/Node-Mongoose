@@ -5,14 +5,14 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'must provide name'],
+        required: [true, 'must provide'],
         trim: true,
         maxlength: [20, 'name can not be more than 20 characters'],
         minlength: [3, 'name can not be less than 3 characters'],
     },
     email: {
         type: String,
-        required: [true, 'Please provide email'],
+        required: [true, 'must provide'],
         match: [
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             'Please provide a valid email',
@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, 'Please provide password'],
+        required: [true, 'must provide'],
         minlength: 6,
     },
     role_id: {

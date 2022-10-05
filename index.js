@@ -8,7 +8,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 const router = express.Router()
 
-const url = 'mongodb://localhost:27017';
+const url = process.env.DB_URI
 const client = new MongoClient(url, {
     useUnifiedTopology: true
 });
@@ -127,8 +127,8 @@ router.route('/user/create').post(async (req, res) => {
     res.json(newUser)
 })
 
-app.use(express.json());
 app.use(router)
+app.use(express.json());
 app.use('/api', require('./routes/api'))
 
 const port = process.env.PORT || 5000;
