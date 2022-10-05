@@ -1,0 +1,19 @@
+[{
+  "_id": {
+    "$oid": "633c403405983f88bb4f3021"
+  },
+  "name": "admin",
+  "created_at": "2022-10-04T14:16:20.825Z"
+},{
+  "_id": {
+    "$oid": "633c44fc64ea5bce8d60decd"
+  },
+  "name": "moderator",
+  "created_at": "2022-10-04T14:36:44.102Z"
+},{
+  "_id": {
+    "$oid": "633c451264ea5bce8d60dece"
+  },
+  "name": "user",
+  "created_at": "2022-10-04T14:37:06.912Z"
+}]

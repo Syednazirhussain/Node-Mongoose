@@ -1,0 +1,70 @@
+[{
+  "_id": {
+    "$oid": "633c447c64ea5bce8d60decc"
+  },
+  "name": "Syed Nazir Hussain",
+  "email": "nazir.hussain@branex.com",
+  "password": "$2b$10$diyzACZPN.f.PM2MEVOcWuDMlccmqq868lzQnfcE0l2823UItltCW",
+  "role_id": {
+    "$oid": "633c403405983f88bb4f3021"
+  },
+  "created_at": "2022-10-04T14:34:36.202Z"
+},{
+  "_id": {
+    "$oid": "633c459486bf3b90b1a2eb43"
+  },
+  "name": "Mohammad Hamza",
+  "email": "mohammadhamza180@gmail.com",
+  "password": "$2b$10$eI4585IwThz8ZYkZMmZr2ODQQNasfbTw.OThETphvjSN6s7ZkscWS",
+  "role_id": {
+    "$oid": "633c451264ea5bce8d60dece"
+  },
+  "created_at": "2022-10-04T14:39:16.323Z"
+},{
+  "_id": {
+    "$oid": "633c45d786bf3b90b1a2eb44"
+  },
+  "name": "Onais Ahmed",
+  "email": "onais.ahmed@gmail.com",
+  "password": "$2b$10$6KmH20iuYOHODj73CCV9RuiM4q86RC/pwr4D55WZg9Sdcs8azF7Ey",
+  "role_id": {
+    "$oid": "633c451264ea5bce8d60dece"
+  },
+  "created_at": "2022-10-04T14:40:23.786Z"
+},{
+  "_id": {
+    "$oid": "633c45fa86bf3b90b1a2eb45"
+  },
+  "name": "Taha Hyder",
+  "email": "taha.hyder@gmail.com",
+  "password": "$2b$10$PkqqhIhd8qTkSFhroZ0YK.COFPo2dTapzDBO78vS3ElC0Hk41qkzK",
+  "role_id": {
+    "$oid": "633c451264ea5bce8d60dece"
+  },
+  "created_at": "2022-10-04T14:40:58.735Z"
+},{
+  "_id": {
+    "$oid": "633c46396a02710ede07d3a7"
+  },
+  "name": "Mohammad Sadiq",
+  "email": "m.sadiq@gmail.com",
+  "password": "$2b$10$5VU8/v0uX.KBKNKy9Zc1ZenSWIwpSg/itnSBDygvnzVUJOKxB2bSu",
+  "role_id": {
+    "$oid": "633c44fc64ea5bce8d60decd"
+  },
+  "created_at": "2022-10-04T14:42:01.473Z"
+},{
+  "_id": {
+    "$oid": "633d47fe096f44c732b5dda2"
+  },
+  "name": "Samama Khan",
+  "email": "samama.khan@hotmail.com",
+  "password": "$2b$10$nF9vWTt2qkv3CFJO5o5hR.CLUoZocs.jGOx.RksLNySIzw5IYvIoa",
+  "role_id": {
+    "$oid": "633c451264ea5bce8d60dece"
+  },
+  "created_at": {
+    "$date": "2022-10-05T09:01:50.408Z"
+  },
+  "__v": 0
+}]

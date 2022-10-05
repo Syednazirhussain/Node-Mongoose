@@ -1,0 +1,61 @@
+[{
+  "_id": {
+    "$oid": "633d2785f2142c86f8fbcc12"
+  },
+  "comment": "A quick brown fox jump over the lazy dog",
+  "post_id": {
+    "$oid": "633c4ada049be6ba1cf02a82"
+  },
+  "user_id": {
+    "$oid": "633c45d786bf3b90b1a2eb44"
+  },
+  "created_at": "2022-10-05T06:43:17.486Z"
+},{
+  "_id": {
+    "$oid": "633d27c3f2142c86f8fbcc13"
+  },
+  "comment": "A brown fox jump over the lazy dog quick",
+  "post_id": {
+    "$oid": "633c4ada049be6ba1cf02a82"
+  },
+  "user_id": {
+    "$oid": "633c45fa86bf3b90b1a2eb45"
+  },
+  "created_at": "2022-10-05T06:44:19.919Z"
+},{
+  "_id": {
+    "$oid": "633d280a99f87cd19da9f3eb"
+  },
+  "comment": "A brown fox jump over dog quick",
+  "post_id": {
+    "$oid": "633c4b31b28d06532aaa4f94"
+  },
+  "user_id": {
+    "$oid": "633c459486bf3b90b1a2eb43"
+  },
+  "created_at": "2022-10-05T06:45:30.071Z"
+},{
+  "_id": {
+    "$oid": "633d282999f87cd19da9f3ec"
+  },
+  "comment": "Lorem ipsum asd ewrwe asda s werewr asds",
+  "post_id": {
+    "$oid": "633c4b31b28d06532aaa4f94"
+  },
+  "user_id": {
+    "$oid": "633c459486bf3b90b1a2eb43"
+  },
+  "created_at": "2022-10-05T06:46:01.481Z"
+},{
+  "_id": {
+    "$oid": "633d284d99f87cd19da9f3ed"
+  },
+  "comment": "Lorem ipsum asd ewrwe asda s werewr asds",
+  "post_id": {
+    "$oid": "633d252688dc1307838a37d4"
+  },
+  "user_id": {
+    "$oid": "633c45d786bf3b90b1a2eb44"
+  },
+  "created_at": "2022-10-05T06:46:37.668Z"
+}]
