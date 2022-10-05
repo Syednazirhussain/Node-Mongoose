@@ -19,8 +19,6 @@ const userUpdate = async (req, res) => {
     
     try {
 
-        console.log(req.query.id);
-
         const { name, email, role_id } = req.body
 
         let data = {

@@ -4,6 +4,7 @@ const { StatusCodes } = require('http-status-codes')
 const User = require('./../../model/User')
 const Role = require('./../../model/Role')
 
+const { sendUserRegisterationEmail } = require('./../../utils/common')
 const { BadRequestError, UnauthenticatedError } = require('./../../../errors')
 
 const register = async (req, res) => {
@@ -24,6 +25,9 @@ const register = async (req, res) => {
     data.role_id = role._id
 
     const user = await User.create(data)
+
+    sendUserRegisterationEmail({ email: user.email, name: user.name })
+
     const token = user.createJWT()
 
     res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token })
