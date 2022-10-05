@@ -40,7 +40,8 @@ router.get(
 
 const { 
     userList,
-    userUpdate
+    userUpdate,
+    userDelete
 } = require('./../app/controller/api/UserController')
 
 router.get(
@@ -53,6 +54,12 @@ router.put(
     '/user/update', 
     authenticateToken,
     userUpdate
+)
+
+router.delete(
+    '/user/delete', 
+    authenticateToken,
+    userDelete
 )
 
 
