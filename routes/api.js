@@ -56,6 +56,12 @@ router.put(
     userUpdate
 )
 
+router.delete(
+    '/user/delete', 
+    authenticateToken,
+    userDelete
+)
+
 /* ------------ Post Controller ------------ */ 
 
 const { 
@@ -79,11 +85,7 @@ router.get(
     authenticateToken,
     commentList
 )
-router.delete(
-    '/user/delete', 
-    authenticateToken,
-    userDelete
-)
+
 
 
 module.exports = router
