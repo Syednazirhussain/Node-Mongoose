@@ -55,5 +55,28 @@ router.put(
     userUpdate
 )
 
+/* ------------ Post Controller ------------ */ 
+
+const { 
+    postList,
+} = require('./../app/controller/api/PostController')
+
+router.get(
+    '/post/list', 
+    authenticateToken,
+    postList
+)
+
+/* ------------ Comments Controller ------------ */ 
+
+const { 
+    commentList,
+} = require('./../app/controller/api/CommentController')
+
+router.get(
+    '/comment/list', 
+    authenticateToken,
+    commentList
+)
 
 module.exports = router
