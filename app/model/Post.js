@@ -1,4 +1,5 @@
-const { mongoose, ObjectId } = require('mongoose');
+const { mongoose, ObjectId } = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const PostSchema = new mongoose.Schema({
     genre: {
@@ -46,5 +47,7 @@ const PostSchema = new mongoose.Schema({
         default: Date.now
     }
 })
+
+PostSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Post', PostSchema, 'posts')

@@ -5,6 +5,24 @@ const Post = require('./../../model/Post')
 const postList = async (req, res) => {
 
   try {
+
+    const options = {
+      page: 1,
+      limit: 2,
+      collation: {
+        locale: 'en',
+      },
+    }
+    
+    Post.paginate({}, options, function (err, result) {
+      if (err) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: 1, message: err.message })
+      } else {
+        res.status(StatusCodes.OK).json({ error: 0, message: 'Post retrive successfully', data: result })
+      }
+    })
+
+    /*
     let posts = await Post.aggregate([
       {
         $lookup: {
@@ -21,9 +39,9 @@ const postList = async (req, res) => {
           as: 'user'
         }
       }
-    ]);
+    ])
+    */
 
-    res.status(StatusCodes.OK).json({ error: 0, posts: posts })
   } catch (error) {
 
     res.json({ error: 1, message: error.message })
