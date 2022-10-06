@@ -3,17 +3,42 @@
     "$oid": "633c403405983f88bb4f3021"
   },
   "name": "admin",
-  "created_at": "2022-10-04T14:16:20.825Z"
+  "created_at": "2022-10-04T14:16:20.825Z",
+  "permissions": [
+    "/api/auth/register",
+    "/api/auth/me",
+    "/api/user/list",
+    "/api/user/update",
+    "/api/user/delete",
+    "/api/post/list",
+    "/api/post/create",
+    "/api/comment/list",
+    "/api/comment/create"
+  ]
 },{
   "_id": {
     "$oid": "633c44fc64ea5bce8d60decd"
   },
   "name": "moderator",
-  "created_at": "2022-10-04T14:36:44.102Z"
+  "created_at": "2022-10-04T14:36:44.102Z",
+  "permissions": [
+    "/api/auth/register",
+    "/api/auth/me",
+    "/api/user/list",
+    "/api/post/list",
+    "/api/post/create",
+    "/api/comment/list",
+    "/api/comment/create"
+  ]
 },{
   "_id": {
     "$oid": "633c451264ea5bce8d60dece"
   },
   "name": "user",
-  "created_at": "2022-10-04T14:37:06.912Z"
+  "created_at": "2022-10-04T14:37:06.912Z",
+  "permissions": [
+    "/api/auth/me",
+    "/api/post/list",
+    "/api/comment/list"
+  ]
 }]

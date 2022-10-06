@@ -7,7 +7,7 @@ const userList = async (req, res) => {
     
     try {
 
-        let  users = await User.find({})
+        let users = await User.find({})
         
         res.json({ error: 0, payload: users })
     } catch (error) {

@@ -7,6 +7,7 @@ const router = express.Router()
 
 const { authenticateToken } = require('./../app/middleware/jwt-auth')
 const validate = require('./../app/middleware/request-validate')
+const permissions = require('./../app/middleware/permissions')
 
 /* ------------ Auth Controller ------------ */ 
 
@@ -19,7 +20,7 @@ const {
 router.post(
     '/auth/register',
     trimRequest.all, 
-    validate.register,
+    [ permissions.check, validate.register ],
     register
 )
 
@@ -32,7 +33,7 @@ router.post(
 
 router.get(
     '/auth/me', 
-    authenticateToken,
+    [ permissions.check, authenticateToken ],
     me
 )
 
@@ -46,19 +47,19 @@ const {
 
 router.get(
     '/user/list', 
-    authenticateToken,
+    [ permissions.check, authenticateToken ],
     userList
 )
 
 router.put(
     '/user/update', 
-    authenticateToken,
+    [ permissions.check, authenticateToken ],
     userUpdate
 )
 
 router.delete(
     '/user/delete', 
-    authenticateToken,
+    [ permissions.check, authenticateToken ],
     userDelete
 )
 
@@ -71,13 +72,13 @@ const {
 
 router.get(
     '/post/list', 
-    authenticateToken,
+    [ permissions.check, authenticateToken ],
     postList
 )
 
 router.post(
     '/post/create', 
-    authenticateToken,
+    [ permissions.check, authenticateToken ],
     createPost
 )
 
@@ -90,15 +91,14 @@ const {
 
 router.get(
     '/comment/list', 
-    authenticateToken,
+    [ permissions.check, authenticateToken ],
     commentList
 )
 
 router.post(
     '/comment/create', 
-    authenticateToken,
+    [ permissions.check, authenticateToken ],
     createComment
 )
-
 
 module.exports = router

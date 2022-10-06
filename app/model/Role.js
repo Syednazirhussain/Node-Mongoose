@@ -13,6 +13,10 @@ const RoleSchema = new mongoose.Schema({
     created_at: {
         type: Date, 
         default: Date.now
+    },
+    permissions: {
+        type: Array, 
+        default: null
     }
 })
 
