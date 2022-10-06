@@ -53,6 +53,10 @@ const login = async (req, res) => {
 
     const token = user.createJWT()
 
+    const role = await Role.findById({ _id: user.role_id })
+
+    req.session.role_permissions = role.permissions;
+
     res.status(StatusCodes.OK).json({ user: { id: user._id, name: user.name, role_id: user.role_id }, token })
 }
 

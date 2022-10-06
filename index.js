@@ -2,9 +2,14 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express();
+const session = require("express-session");
 
 const { connectDB } = require('./database/mongoose');
 
+app.use(session({ secret: process.env.sessionSecret ,saveUninitialized: true,
+    resave: true
+}));
+    
 app.use(express.json())
 
 app.use('/api', require('./routes/api'))
