@@ -1,9 +1,10 @@
 require('dotenv').config()
 
 const express = require('express')
-const app = express();
 
 const { connectDB } = require('./database/mongoose');
+
+const app = express()
 
 app.use(express.json())
 

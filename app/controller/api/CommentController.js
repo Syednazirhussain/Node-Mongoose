@@ -1,3 +1,4 @@
+const Validator = require('validatorjs')
 const { MongoClient, ObjectId } = require('mongodb')
 const { StatusCodes } = require('http-status-codes')
 
@@ -41,32 +42,55 @@ const createComment = async (req, res) => {
 
   try {
 
-    const post = await client.db('node-mongoose')
-                            .collection('posts')
-                            .findOne({ _id: ObjectId(req.body.post_id) })
+    let rules = {
+      name: 'required',
+      email: 'required|email',
+      age: 'min:18'
+    };
 
-    const user = await client.db('node-mongoose')
-                            .collection('users')
-                            .findOne({ _id: ObjectId(req.body.user_id) })
+    let validator = new Validator({ ...req.body }, rules, {
+      "required.name": ":attribute is required",
+      "required.email": ":attribute is required",
+      "email.email": ":attribute is not valid",
+      "min.age": ":attribute should be greater then 18 years",
+    })
 
+    if (validator.fails()) {
 
-    if (ObjectId.isValid(user._id) && ObjectId.isValid(post._id)) {
-
-      let comment = {
-        comment: req.body.comment,
-        post_id: post._id,
-        user_id: user._id,
-        created_at: new Date().toISOString()
-      }
-
-      let newComment = await client.db("node-mongoose")
-                                  .collection('comments')
-                                  .insertOne(comment)
-
-      res.json(newComment)
+      res.status(StatusCodes.BAD_REQUEST).json({ 
+        error: 1, 
+        message: 'Please fix the following errors!', 
+        errors: validator.errors 
+      })
     }
 
-    res.json({ "message": "Comment added" })
+    if (validator.passes()) {
+
+      const post = await client.db('node-mongoose')
+                              .collection('posts')
+                              .findOne({ _id: ObjectId(req.body.post_id) })
+  
+      const user = await client.db('node-mongoose')
+                              .collection('users')
+                              .findOne({ _id: ObjectId(req.body.user_id) })
+  
+  
+      if (ObjectId.isValid(user._id) && ObjectId.isValid(post._id)) {
+  
+        let comment = {
+          comment: req.body.comment,
+          post_id: post._id,
+          user_id: user._id,
+          created_at: new Date().toISOString()
+        }
+  
+        let newComment = await client.db("node-mongoose")
+                                    .collection('comments')
+                                    .insertOne(comment)
+  
+        res.json(newComment)
+      }
+    }
 
   } catch (error) {
 

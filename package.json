@@ -25,7 +25,8 @@
     "mongoose": "^6.6.4",
     "nodemailer": "^6.8.0",
     "trim-request": "^1.0.6",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "validatorjs": "^3.22.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
