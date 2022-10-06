@@ -66,6 +66,7 @@ router.delete(
 
 const { 
     postList,
+    createPost
 } = require('./../app/controller/api/PostController')
 
 router.get(
@@ -74,10 +75,17 @@ router.get(
     postList
 )
 
+router.post(
+    '/post/create', 
+    authenticateToken,
+    createPost
+)
+
 /* ------------ Comments Controller ------------ */ 
 
 const { 
     commentList,
+    createComment
 } = require('./../app/controller/api/CommentController')
 
 router.get(
@@ -86,6 +94,11 @@ router.get(
     commentList
 )
 
+router.post(
+    '/comment/create', 
+    authenticateToken,
+    createComment
+)
 
 
 module.exports = router

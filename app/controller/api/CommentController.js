@@ -30,7 +30,7 @@ const commentList = async (req, res) => {
       }
     ]);
 
-    res.json({ error: 0, comments: comments })
+    res.status(StatusCodes.OK).json({ error: 0, comments: comments })
   } catch (error) {
 
     res.json({ error: 1, message: error.message })
@@ -70,7 +70,7 @@ const createComment = async (req, res) => {
 
   } catch (error) {
 
-    res.json({ error: 1, message: error.message })
+    res.json({ error: 2, message: error.message })
   }
 }
 
