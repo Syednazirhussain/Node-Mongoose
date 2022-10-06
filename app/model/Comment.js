@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { mongoose, ObjectId } = require('mongoose');
 
 const CommentSchema = new mongoose.Schema({
     comment: {
@@ -9,11 +9,11 @@ const CommentSchema = new mongoose.Schema({
         minlength: [11, 'comment can not be less than 11 characters'],
     },
     user_id: {
-        type: mongoose.ObjectId,
+        type: ObjectId,
         required: [true, 'atleast one user must be associate'],
     },
     post_id: {
-        type: mongoose.ObjectId,
+        type: ObjectId,
         required: [true, 'atleast one post must be associate'],
     },
     created_at: {

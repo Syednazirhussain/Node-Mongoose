@@ -22,11 +22,11 @@ const createRole = async (req, res) => {
     let newRole = await client.db("node-mongoose").collection('roles').insertOne({
         name: req.body.name,
         created_at: new Date().toISOString()
-    });
+    })
 
     // let newRole = await client.db("node-mongoose")
     //                         .collection('roles')
-    //                         .insertOne(role);
+    //                         .insertOne(role)
 
     res.status(StatusCodes.OK).json({ error: 0, data: newRole })
 
