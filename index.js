@@ -6,7 +6,9 @@ const session = require("express-session");
 
 const { connectDB } = require('./database/mongoose');
 
-app.use(session({ secret: process.env.sessionSecret ,saveUninitialized: true,
+app.use(session({ 
+    secret: process.env.SESSION_SECRET, 
+    saveUninitialized: true,
     resave: true
 }));
     

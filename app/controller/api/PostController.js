@@ -55,7 +55,7 @@ const createPost = async (req, res) => {
     let inputData = { ...req.body }
 
     const newPost = new Post(inputData)
-    const error = newPost.validateSync();
+    const error = newPost.validateSync()
 
     if (error && error.errors != null) {
 
