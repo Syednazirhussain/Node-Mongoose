@@ -72,7 +72,7 @@ const {
 
 router.get(
     '/post/list', 
-    [ permissions.check, authenticateToken ],
+    [ authenticateToken ],
     postList
 )
 

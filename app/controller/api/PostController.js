@@ -7,13 +7,16 @@ const postList = async (req, res) => {
   try {
 
     const options = {
-      page: 1,
-      limit: 2,
+      page: req.query.page,
+      limit: req.query.limit,
       collation: {
         locale: 'en',
       },
     }
     
+    console.log(options);
+
+    /*
     Post.paginate({}, options, function (err, result) {
       if (err) {
         res.status(StatusCodes.BAD_REQUEST).json({ error: 1, message: err.message })
@@ -21,8 +24,8 @@ const postList = async (req, res) => {
         res.status(StatusCodes.OK).json({ error: 0, message: 'Post retrive successfully', data: result })
       }
     })
+    */
 
-    /*
     let posts = await Post.aggregate([
       {
         $lookup: {
@@ -38,9 +41,12 @@ const postList = async (req, res) => {
           foreignField: '_id',
           as: 'user'
         }
-      }
+      },
+      { $skip: parseInt(req.query.page) },
+      { $limit: parseInt(req.query.limit) },
     ])
-    */
+
+    res.status(StatusCodes.OK).json({ error: 0, message: 'Post retrive successfully', data: posts })
 
   } catch (error) {
 
