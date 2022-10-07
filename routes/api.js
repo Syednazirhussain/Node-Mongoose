@@ -78,7 +78,7 @@ router.get(
 
 router.post(
     '/post/create', 
-    [ permissions.check, authenticateToken ],
+    [ authenticateToken ],
     createPost
 )
 
@@ -97,7 +97,7 @@ router.get(
 
 router.post(
     '/comment/create', 
-    [ permissions.check, authenticateToken ],
+    [ authenticateToken ],
     createComment
 )
 
