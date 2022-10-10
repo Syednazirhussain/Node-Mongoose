@@ -3,11 +3,11 @@ const trimRequest = require('trim-request')
 
 const router = express.Router()
 
-/* ------------ Middleware ------------ */ 
+/* ------------ Middlewares ------------ */ 
 
+const { authorize } = require('./../app/middleware/permissions')
 const { authenticateToken } = require('./../app/middleware/jwt-auth')
 const validate = require('./../app/middleware/request-validate')
-const permissions = require('./../app/middleware/permissions')
 
 /* ------------ Auth Controller ------------ */ 
 
@@ -20,7 +20,7 @@ const {
 router.post(
     '/auth/register',
     trimRequest.all, 
-    [ permissions.check, validate.register ],
+    [ validate.register ],
     register
 )
 
@@ -33,8 +33,20 @@ router.post(
 
 router.get(
     '/auth/me', 
-    [ permissions.check, authenticateToken ],
+    [ authenticateToken, authorize ],
     me
+)
+
+/* ------------ Permission Controller ------------ */ 
+
+const { 
+    createPermission,
+} = require('./../app/controller/api/PermissionController')
+
+router.post(
+    '/permission/create', 
+    [ authenticateToken ],
+    createPermission
 )
 
 /* ------------ User Controller ------------ */ 
@@ -47,19 +59,19 @@ const {
 
 router.get(
     '/user/list', 
-    [ permissions.check, authenticateToken ],
+    [ authenticateToken, authorize ],
     userList
 )
 
 router.put(
     '/user/update', 
-    [ permissions.check, authenticateToken ],
+    [ authenticateToken, authorize ],
     userUpdate
 )
 
 router.delete(
     '/user/delete', 
-    [ permissions.check, authenticateToken ],
+    [ authenticateToken, authorize ],
     userDelete
 )
 
@@ -72,13 +84,13 @@ const {
 
 router.get(
     '/post/list', 
-    [ authenticateToken ],
+    [ authenticateToken, authorize ],
     postList
 )
 
 router.post(
     '/post/create', 
-    [ authenticateToken ],
+    [ authenticateToken, authorize ],
     createPost
 )
 
@@ -91,7 +103,7 @@ const {
 
 router.get(
     '/comment/list', 
-    [ permissions.check, authenticateToken ],
+    [ authenticateToken, authorize ],
     commentList
 )
 

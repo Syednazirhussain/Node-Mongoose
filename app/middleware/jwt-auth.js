@@ -13,10 +13,11 @@ exports.authenticateToken = (req, res, next) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(StatusCodes.UNAUTHORIZED).json({ message: err.message })
+        } else {
+            console.log('authenticated')
+            req.user = decoded
+            next()
         }
 
-        req.user = decoded
     })
-
-    next()
 }

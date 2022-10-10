@@ -1,0 +1,169 @@
+[{
+  "_id": {
+    "$oid": "6343c2b2b69d38dc3dc2005d"
+  },
+  "name": "list-post",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T06:58:58.194Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a11"
+  },
+  "name": "create-post",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a12"
+  },
+  "name": "update-post",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a13"
+  },
+  "name": "delete-post",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a14"
+  },
+  "name": "list-comment",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a15"
+  },
+  "name": "create-comment",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a16"
+  },
+  "name": "update-comment",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a17"
+  },
+  "name": "delete-comment",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a18"
+  },
+  "name": "view-user",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a19"
+  },
+  "name": "list-user",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a1a"
+  },
+  "name": "create-user",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a1b"
+  },
+  "name": "update-user",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ca7bfb2b7a9e05d13a1c"
+  },
+  "name": "delete-user",
+  "role_id": "633c403405983f88bb4f3021",
+  "created_at": "2022-10-10T07:32:11.735Z"
+},{
+  "_id": {
+    "$oid": "6343ceb264dea4f85d9904b3"
+  },
+  "name": "list-post",
+  "role_id": "633c44fc64ea5bce8d60decd",
+  "created_at": "2022-10-10T07:50:10.645Z"
+},{
+  "_id": {
+    "$oid": "6343ceb264dea4f85d9904b4"
+  },
+  "name": "update-post",
+  "role_id": "633c44fc64ea5bce8d60decd",
+  "created_at": "2022-10-10T07:50:10.645Z"
+},{
+  "_id": {
+    "$oid": "6343ceb264dea4f85d9904b5"
+  },
+  "name": "list-comment",
+  "role_id": "633c44fc64ea5bce8d60decd",
+  "created_at": "2022-10-10T07:50:10.645Z"
+},{
+  "_id": {
+    "$oid": "6343ceb264dea4f85d9904b6"
+  },
+  "name": "update-comment",
+  "role_id": "633c44fc64ea5bce8d60decd",
+  "created_at": "2022-10-10T07:50:10.645Z"
+},{
+  "_id": {
+    "$oid": "6343ceb264dea4f85d9904b7"
+  },
+  "name": "view-user",
+  "role_id": "633c44fc64ea5bce8d60decd",
+  "created_at": "2022-10-10T07:50:10.645Z"
+},{
+  "_id": {
+    "$oid": "6343ceb264dea4f85d9904b8"
+  },
+  "name": "list-user",
+  "role_id": "633c44fc64ea5bce8d60decd",
+  "created_at": "2022-10-10T07:50:10.645Z"
+},{
+  "_id": {
+    "$oid": "6343ceb264dea4f85d9904b9"
+  },
+  "name": "update-user",
+  "role_id": "633c44fc64ea5bce8d60decd",
+  "created_at": "2022-10-10T07:50:10.645Z"
+},{
+  "_id": {
+    "$oid": "6343cf0464dea4f85d9904ba"
+  },
+  "name": "list-post",
+  "role_id": "633c44fc64ea5bce8d60decd",
+  "created_at": "2022-10-10T07:51:32.531Z"
+},{
+  "_id": {
+    "$oid": "6343cf0464dea4f85d9904bb"
+  },
+  "name": "list-comment",
+  "role_id": "633c451264ea5bce8d60dece",
+  "created_at": "2022-10-10T07:51:32.531Z"
+},{
+  "_id": {
+    "$oid": "6343cf0464dea4f85d9904bc"
+  },
+  "name": "view-user",
+  "role_id": "633c451264ea5bce8d60dece",
+  "created_at": "2022-10-10T07:51:32.531Z"
+},{
+  "_id": {
+    "$oid": "6343cf0464dea4f85d9904bd"
+  },
+  "name": "list-user",
+  "role_id": "633c451264ea5bce8d60dece",
+  "created_at": "2022-10-10T07:51:32.531Z"
+}]
