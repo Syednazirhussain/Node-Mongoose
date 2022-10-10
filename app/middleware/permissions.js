@@ -30,7 +30,6 @@ exports.authorize = (req, res, next) => {
         } else {
 
             req.user = decoded
-    
 
             let permissions = await client.db("node-mongoose")
                                         .collection('permissions')
@@ -38,9 +37,11 @@ exports.authorize = (req, res, next) => {
                                             role_id: decoded.roleId
                                         })
                                         .toArray()
-
+                                        
             const allowedPermission = permissions.map((o) => {
-                return o.name
+                if (o.status == "active") {
+                    return o.name
+                }
             })
 
             if (decoded.roleName == 'admin') {
