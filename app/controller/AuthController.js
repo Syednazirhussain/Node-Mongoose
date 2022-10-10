@@ -9,7 +9,7 @@ exports.login = async (req, res) => {
 
             res.status(StatusCodes.OK).render('auth/login')
         } else {
-            
+
             res.redirect('/home')
         }
 
@@ -52,4 +52,60 @@ exports.logout = async (req, res) => {
 
         handleError(res, error)
     }
+}
+
+exports.forgetPasswordView = async (req, res) => {
+    res.render('auth/forget-password', { message: req.flash('message'), success: req.flash('success') }) 
+}
+
+exports.forgetPasswordPost = async (req, res) => {
+
+    let result = await authService.forgetPassword(req);
+    
+    if (result.error == 1) {
+        req.flash('message', result.message);
+        res.redirect("/forget-password");
+    } else {
+        req.flash('success', result.success);
+        res.redirect("/forget-password");
+    }
+}
+
+// Reset Password View
+exports.resetPasswordView = async (req, res ) => {
+    let result = await authService.resetPasswordView(req);
+
+    if (result.error == 1) {
+        req.flash('message',result.message);
+        res.redirect("/forget-password");
+    } else {
+        res.render('auth/reset-password',{ email : result.email, val: result.val });
+    }
+
+}
+
+// Reset Password View
+exports.resetPassword = async (req, res) => {
+
+    let result = await authService.resetPassword(req);
+
+    if (result.error == 1) {
+
+        req.flash('message', result.message)
+        return res.redirect('auth/reset-password', { email: result.email })
+    } else {
+
+        if (req.body.val == 0) {
+
+            req.flash('success', result.success)
+            return res.redirect("/login")
+        } else {
+            
+            return res.redirect("/reset-password/success")
+        }
+    }
+}
+
+exports.resetPasswordSuccess = async (req, res) => {
+    return res.render('auth/success');
 }

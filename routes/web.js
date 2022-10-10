@@ -31,7 +31,12 @@ router.get(
 const { 
     login,
     loginAttempt,
-    logout
+    logout,
+    forgetPasswordView,
+    forgetPasswordPost,
+    resetPasswordView,
+    resetPassword,
+    resetPasswordSuccess
 } = require('./../app/controller/AuthController')
 
 router.get(
@@ -50,6 +55,31 @@ router.get(
     '/logout',
     authenticateUser,
     logout
+)
+
+router.get(
+    '/forget-password',
+    forgetPasswordView
+)
+
+router.post(
+    '/forget-passwordPost',
+    forgetPasswordPost
+)
+
+router.get(
+    '/reset-password/:token/:email/:val',
+    resetPasswordView
+)
+
+router.post(
+    '/reset-password',
+    resetPassword
+)
+
+router.get(
+    '/reset-password/success',
+    resetPasswordSuccess
 )
 
 module.exports = router
