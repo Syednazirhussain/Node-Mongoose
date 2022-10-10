@@ -1,4 +1,5 @@
-const { check, validationResult } = require('express-validator')
+const { check, validationResult } = require('express-validator');
+const { StatusCodes } = require('http-status-codes');
 const User = require('./../model/User')
 
 /**
@@ -53,8 +54,6 @@ exports.login = [
             }
         }),
     check('password')
-        .exists()
-        .withMessage('Password is required')
         .not()
         .isEmpty()
         .withMessage('Password is required')
@@ -63,10 +62,20 @@ exports.login = [
     (req, res, next) => {
         // Finds the validation errors in this request and wraps them in an object with handy functions
         const errors = validationResult(req)
-        if (!errors.isEmpty()) {
-            res.json({ error: 1, errors: errors.array() })
-        } else {
+        
+        if (errors.isEmpty()) {
+            
             next()
+        } else {
+
+            if (req.xhr || req.is('*/json')) {
+                res.json({ error: 1, errors: errors.array() })
+            } else {
+                console.log(errors.array());
+                let backURL = req.header('Referer') || '/'           
+                req.flash('error', errors.array())
+                res.redirect(backURL)
+            }
         }
     }
 ]
