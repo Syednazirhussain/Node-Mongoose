@@ -1,6 +1,28 @@
 const authService = require('./../services/AuthService')
 const { StatusCodes } = require('http-status-codes')
 
+exports.getregister = async (req, res) => {
+    res.render('auth/register', { success: req.flash('success'), message: req.flash('message') });
+}
+
+exports.register = async (req, res) => {
+    try {
+        let result = await authService.register(req)
+
+        if (result.error == 1) { 
+            req.flash('message', result.message)
+            res.redirect("/register")
+        } else {
+
+            req.flash('success', result.success)
+            res.redirect("/register")
+        }
+
+    } catch(error) {
+        res.render('errors/500', { message: error.message })
+    }
+}
+
 exports.login = async (req, res) => {
 
     try {

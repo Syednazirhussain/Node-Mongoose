@@ -1,9 +1,48 @@
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcrypt')
+const { checkPassword } = require('../middleware/auth')
 
 const User = require('./../model/User')
 const mailer = require('./../helper/mailer')
+const { ObjectId } = require('mongodb')
+
+async function register(req, res) {
+
+    try {
+
+        const { name, email, password } = req.body
+    
+        const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
+        const register = await User.create({
+            name: name, 
+            email: email, 
+            password: pass,
+            role_id: new ObjectId('633c451264ea5bce8d60dece')
+        })
+
+        let link = `${process.env.APP_BASE_PATH}`;
+
+        var html = fs.readFileSync(process.cwd() + '/views/emails/user-registration.ejs').toString();
+        
+        html = html.replace('{{NAME}}', name);
+        html = html.replace('{{URL}}', link);
+
+            // Send confirmation email
+            await mailer.send(
+                process.env.FROM_EMAIL,
+                email,
+                "User Registered",
+                html
+            );
+
+        return { error: 0, success: 'User registered successfully.' }
+
+    } catch (error) {
+        return { error: 1, message: error.message }
+    }
+}
 
 async function login(req) {
 
@@ -168,6 +207,7 @@ async function resetPassword(req, res) {
 
 
 module.exports = {
+    register,
     login,
     forgetPassword,
     resetPasswordView,

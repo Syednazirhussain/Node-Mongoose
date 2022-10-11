@@ -29,6 +29,8 @@ router.get(
 /* ------------ Auth Controller ------------ */ 
 
 const { 
+    getregister,
+    register,
     login,
     loginAttempt,
     logout,
@@ -38,6 +40,18 @@ const {
     resetPassword,
     resetPasswordSuccess
 } = require('./../app/controller/AuthController')
+
+router.get(
+    '/register',
+    getregister
+)
+
+router.post(
+    '/register',
+    trimRequest.all,
+    validate.register,
+    register
+)
 
 router.get(
     '/login',

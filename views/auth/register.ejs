@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Node-Mongoose</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <!-- <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css"> -->
+  <!-- icheck bootstrap -->
+  <!-- <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css"> -->
+  <!-- Theme style -->
+  <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <!-- /.login-logo -->
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <a href="javascript:void(0);" class="h1"><b>Node</b>-Mongoose</a>
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">Create a new account</p>
+
+      <%
+            if(typeof success !== 'undefined') {
+            if(success != '') {
+            %>
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-check"></i> Alert!</h5>
+                <%= success %>
+            </div>
+            <br>
+            <%
+            }
+            }
+            %>
+
+            <%
+            if(typeof message !== 'undefined') {
+            if(message != '') {
+            %>
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+                <%= message %>
+            </div>
+            <br>
+            <%
+            }
+            }
+            %>
+
+            <% if (typeof messages.error !=='undefined' ) { %>
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+                    <% if (Array.isArray(messages.error)) { %>
+                        <ul>
+                            <% messages.error.forEach(function(e) { %>
+                                <li>
+                                    <%= e.msg %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    <% } %>
+                </div>
+            <% } %>
+
+      <form action="/register" method="POST" id="registerform">
+        <div class="input-group mb-3">
+            <input name="name" type="text" class="form-control" placeholder="Name" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+        <div class="input-group mb-3">
+          <input name="email" type="email" class="form-control" placeholder="Email" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input name="password" type="password" class="form-control" placeholder="Password" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+            <input name="confirmpassword" type="password" class="form-control" placeholder="Confirm Password" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button type="submit" id="btnSubmit" class="btn btn-primary btn-block">Sign Up</button>
+          </div>
+        </div>
+      </form>
+      <p class="mb-1"><br>
+        <a href="/login">Already have an account?</a>
+      </p>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<!-- <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+<!-- AdminLTE App -->
+<script src="admin-lte/dist/js/adminlte.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#registerform').submit(function(e) {
+            $('#btnSubmit').attr('disabled', true);
+        })
+    })
+</script>
+
+</body>
+</html>

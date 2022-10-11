@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const authenticateUser = async (req, res, next) => {
 
     try {
@@ -13,5 +15,15 @@ const authenticateUser = async (req, res, next) => {
 }
 
 module.exports = {
-    authenticateUser
+    authenticateUser,
+    
+    async checkPassword(password, confirmpassword) {
+        return new Promise((resolve, reject) => {
+            if (bcrypt.compareSync(password, confirmpassword)) {
+              resolve(true)
+            } else {
+              resolve(false)
+            }
+        })
+    }
 }

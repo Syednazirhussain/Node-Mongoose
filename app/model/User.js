@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-})
+}, { versionKey: false })
 
 UserSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt(10)
