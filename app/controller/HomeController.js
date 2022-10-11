@@ -2,9 +2,7 @@
 exports.home = (req, res) => {
 
     try {
-
-        // throw new Error("Abu arahe hain")
-
+        
         var mascots = [
             { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012 },
             { name: 'Tux', organization: "Linux", birth_year: 1996 },
