@@ -47,8 +47,6 @@ exports.loginAttempt = async (req, res) => {
 
         let result = await authService.login(req)
 
-        console.log(result);
-
         if (result.error == 1) {
 
             req.flash('message', result.message)
