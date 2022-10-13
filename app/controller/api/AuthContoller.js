@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb')
 const { StatusCodes } = require('http-status-codes')
 
 const User = require('./../../model/User')

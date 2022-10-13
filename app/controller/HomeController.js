@@ -1,8 +1,17 @@
+const { pushNotification } = require('./../helper/fcm')
 
 exports.home = (req, res) => {
 
     try {
         
+        pushNotification({
+            subject: 'My First Notification',
+            meesage: 'This is from NodeJS project',
+            devices: [],
+            refid: '',
+            click_action: ''
+        })
+
         var mascots = [
             { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012 },
             { name: 'Tux', organization: "Linux", birth_year: 1996 },
