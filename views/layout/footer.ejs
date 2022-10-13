@@ -19,8 +19,100 @@
 <!-- AdminLTE App -->
 <script src="admin-lte/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="admin-lte/dist/js/demo.js"></script>
+<!-- <script src="admin-lte/dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="admin-lte/dist/js/pages/dashboard.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-messaging.js"></script>
+
+<script>
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyCvs5ciEYaYuBxdsI11pbqArRASlnBqDGA",
+        authDomain: "kfs-block-2.firebaseapp.com",
+        projectId: "kfs-block-2",
+        storageBucket: "kfs-block-2.appspot.com",
+        messagingSenderId: "250605042436",
+        appId: "1:250605042436:web:535e1efd2d72ed3262ee51",
+        measurementId: "G-WSWJWPMMYB"
+    }
+    
+    firebase.initializeApp(firebaseConfig)
+    
+    const messaging = firebase.messaging()
+    
+    startFCM = () => {
+        messaging
+            .requestPermission()
+            .then(() => {
+                if (Notification.permission === "granted") {
+                    if ('serviceWorker' in navigator) {
+                        navigator.serviceWorker.register(`${window.location.origin}/firebase-messaging-sw.js`, {
+                            scope: `${window.location.origin}/service-worker.js`
+                        }).then((reg) => {
+                            messaging.useServiceWorker(reg)
+                        })
+                    } else {
+                        console.log('Not supported')
+                    }
+                    return messaging.getToken()
+                } else {
+                    return false
+                }
+            })
+            .then((currentToken) => {
+
+                console.log("Token: ", currentToken)
+
+                $.ajax({
+                    url: '<%= url("user/store-token") %>',
+                    type: 'POST',
+                    data: {
+                        device_token: currentToken,
+                        device_type: 'chrome',
+                    },
+                    dataType: 'JSON',
+                    headers: { 
+                        'Accept': 'application/json'
+                    }
+                }).done((response) => {
+                    console.log(response)
+                }).catch((error) => {
+                    console.log("Ajax Error", error)
+                })
+            })
+            .catch((error) => {
+                console.log("Error", error)
+            })
+    }
+
+    messaging.onMessage((payload) => {
+
+        console.log(payload)
+
+        const title = 'Notification Title'
+        
+        const options = {
+            body: 'Notification Body',
+            icon: 'http://127.0.0.1:5000/favicon.ico',
+        }
+
+        let notify = new Notification(title, options)
+
+        notify.onclick = (event) => {
+            event.preventDefault()
+            window.open('https://www.google.com', '_blank')
+        }
+
+        loadNotificationCount()
+        loadNotificationList()
+    })
+
+    startFCM()
+
+</script>
+
+
 </body>
 </html>

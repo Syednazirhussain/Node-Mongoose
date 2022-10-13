@@ -26,6 +26,18 @@ router.get(
     home
 )
 
+/* ------------ User Controller ------------ */ 
+
+const { 
+    storeToken
+} = require('./../app/controller/UserController')
+
+router.post(
+    '/user/store-token',
+    authenticateUser,
+    storeToken
+)
+
 /* ------------ Auth Controller ------------ */ 
 
 const { 
@@ -95,5 +107,6 @@ router.get(
     '/reset-password/success',
     resetPasswordSuccess
 )
+
 
 module.exports = router

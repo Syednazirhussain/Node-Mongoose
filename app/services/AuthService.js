@@ -70,7 +70,7 @@ async function login(req) {
         req.session.name = userExist.name
         req.session.email = userExist.email
 
-        console.log(req.session)
+        // console.log(req.session)
 
         return { error: 0, message: 'Login Successfull' }
 

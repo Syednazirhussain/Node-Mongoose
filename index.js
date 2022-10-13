@@ -1,14 +1,17 @@
 require('dotenv').config()
 
 const express = require('express')
+
 const app = express()
 const path = require('path')
 const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const session = require("express-session")
+const common_helper = require('./app/helper/common')
 
 const { connectDB } = require('./database/mongoose')
 
+common_helper(app)
 // For parsing json
 app.use(
     bodyParser.json({
@@ -45,6 +48,11 @@ app.use(
 
 app.use('/', require('./routes/web'))
 app.use('/api', require('./routes/api'))
+
+// throw 404 if URL not found
+app.all("*", function(req, res) {
+    return res.render("errors/404.ejs")
+})
 
 const port = process.env.PORT || 5000
 
