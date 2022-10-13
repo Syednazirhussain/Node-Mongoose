@@ -24,6 +24,9 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'must provide'],
         minlength: 6,
     },
+    image: {
+        type: String,
+    },
     role_id: {
         type: mongoose.ObjectId,
         required: [true, 'must associated with any role like admin, moderator, or user'],

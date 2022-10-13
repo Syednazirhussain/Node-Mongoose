@@ -13,7 +13,9 @@ exports.home = (req, res) => {
                 
         res.render('index', {
             mascots: mascots,
-            tagline: tagline
+            tagline: tagline,
+            name: req.session.name,
+            image: req.session.image
         })
     } catch (error) {
 

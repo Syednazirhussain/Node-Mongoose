@@ -43,6 +43,8 @@ app.use(
   express.static(path.join(__dirname, "node_modules/"))
 )
 
+app.use('/public',express.static(path.join(__dirname, "public")));
+
 app.use('/', require('./routes/web'))
 app.use('/api', require('./routes/api'))
 

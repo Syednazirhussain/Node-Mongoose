@@ -1,5 +1,6 @@
 const express = require('express')
 const trimRequest = require('trim-request')
+const uploadImage = require("../app/middleware/imageupload");
 
 const router = express.Router()
 
@@ -19,6 +20,11 @@ router.get('/', (req, res) => {
 const { 
     home 
 } = require('./../app/controller/HomeController')
+
+const { 
+    edit,
+    update
+} = require('./../app/controller/ProfileController')
 
 router.get(
     '/home', 
@@ -49,7 +55,7 @@ router.get(
 router.post(
     '/register',
     trimRequest.all,
-    validate.register,
+    validate.registerweb,
     register
 )
 
@@ -63,6 +69,21 @@ router.post(
     trimRequest.all,
     validate.login,
     loginAttempt
+)
+
+router.get(
+    '/editProfile',
+    authenticateUser,
+    edit
+)
+
+router.post(
+    '/updateProfile',
+    [authenticateUser,
+    trimRequest.all,
+    // validate.updateProfile,
+    uploadImage.single('image') ],
+    update
 )
 
 router.get(

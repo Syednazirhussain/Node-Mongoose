@@ -12,13 +12,11 @@ async function register(req, res) {
     try {
 
         const { name, email, password } = req.body
-    
-        const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
         const register = await User.create({
             name: name, 
             email: email, 
-            password: pass,
+            password: password,
             role_id: new ObjectId('633c451264ea5bce8d60dece')
         })
 
@@ -50,11 +48,7 @@ async function login(req) {
 
         const { email, password } = req.body
     
-        const userExist = await User.findOne({
-            where: {
-                email: email
-            }
-        })
+        const userExist = await User.findOne({ email: email })
 
         if (!userExist) {
             return { error: 1, message: 'Email not exist' }
@@ -69,8 +63,7 @@ async function login(req) {
         req.session.user_id = userExist.id
         req.session.name = userExist.name
         req.session.email = userExist.email
-
-        console.log(req.session)
+        req.session.image = userExist.image
 
         return { error: 0, message: 'Login Successfull' }
 
