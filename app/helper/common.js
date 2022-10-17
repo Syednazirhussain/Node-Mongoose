@@ -9,4 +9,8 @@ module.exports = (app) => {
     global.fields = (fields = '') => {
         return fields;
     }
+
+    global.admin = (admin = '') => {
+        return admin;
+    }
 }

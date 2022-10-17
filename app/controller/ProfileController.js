@@ -9,11 +9,11 @@ exports.edit = async (req, res) => {
         if (edit.error == 1) { 
             res.redirect("/")
         } else {
-            res.render('profile/edit', { user: edit.user, name: req.session.name, image: req.session.image, success: req.flash('success'), message: req.flash('message') });
+            res.status(StatusCodes.OK).render('profile/edit', { user: edit.user, name: req.session.name, image: req.session.image, success: req.flash('success'), message: req.flash('message') });
         }
 
     } catch(error) {
-        res.render('errors/500', { message: error.message })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
     }
 
 }
@@ -34,7 +34,7 @@ exports.update = async (req, res) => {
         }
 
     } catch(error) {
-        res.render('errors/500', { message: error.message })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
     }
 
 }
