@@ -28,7 +28,7 @@ const register = async (req, res) => {
 
     sendUserRegisterationEmail({ email: user.email, name: user.name })
 
-    const token = user.createJWT()
+    const token = user.createJWT({ role })
 
     res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token })
 }
