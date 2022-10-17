@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const cors = require('cors');
 
 const app = express()
 const path = require('path')
@@ -10,6 +11,8 @@ const session = require("express-session")
 const common_helper = require('./app/helper/common')
 
 const { connectDB } = require('./database/mongoose')
+
+app.use(cors({ origin: '*' }));
 
 common_helper(app)
 // For parsing json

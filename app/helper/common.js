@@ -5,4 +5,8 @@ module.exports = (app) => {
     global.url = (url = '') => {
         return process.env.APP_BASE_PATH + url
     }
+
+    global.fields = (fields = '') => {
+        return fields;
+    }
 }

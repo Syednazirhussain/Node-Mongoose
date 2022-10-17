@@ -79,6 +79,7 @@ exports.registerweb = [
             }   
         }),
         (req, res, next) => {
+
             // Finds the validation errors in this request and wraps them in an object with handy functions
             const errors = validationResult(req)
             
@@ -86,11 +87,11 @@ exports.registerweb = [
                 
                 next()
             } else {
-    
+                req.app.locals.fields = req.body;
                 if (req.xhr || req.is('*/json')) {
                     res.json({ error: 1, errors: errors.array() })
                 } else {
-                    console.log(errors.array());
+                    // console.log(errors.array());
                     let backURL = req.header('Referer') || '/'           
                     req.flash('error', errors.array())
                     res.redirect(backURL)
@@ -113,16 +114,15 @@ exports.updateProfile = [
         (req, res, next) => {
             // Finds the validation errors in this request and wraps them in an object with handy functions
             const errors = validationResult(req)
-            
             if (errors.isEmpty()) {
                 
                 next()
             } else {
-    
+                req.app.locals.fields = req.body;
                 if (req.xhr || req.is('*/json')) {
                     res.json({ error: 1, errors: errors.array() })
                 } else {
-                    console.log(errors.array());
+                    // console.log(errors.array());
                     let backURL = req.header('Referer') || '/'           
                     req.flash('error', errors.array())
                     res.redirect(backURL)
@@ -164,7 +164,7 @@ exports.login = [
             
             next()
         } else {
-
+            req.app.locals.fields = req.body;
             if (req.xhr || req.is('*/json')) {
                 res.json({ error: 1, errors: errors.array() })
             } else {

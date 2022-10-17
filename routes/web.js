@@ -21,16 +21,34 @@ const {
     home 
 } = require('./../app/controller/HomeController')
 
+router.get(
+    '/home', 
+    authenticateUser, 
+    home
+)
+
+/* ------------ Profile Controller ------------ */ 
+
 const { 
     edit,
     update
 } = require('./../app/controller/ProfileController')
 
 router.get(
-    '/home', 
-    authenticateUser, 
-    home
+    '/editProfile',
+    authenticateUser,
+    edit
 )
+
+router.post(
+    '/updateProfile',
+    [authenticateUser,
+    trimRequest.all,
+    validate.updateProfile,
+    uploadImage.single('image') ],
+    update
+)
+
 
 /* ------------ User Controller ------------ */ 
 
@@ -81,21 +99,6 @@ router.post(
     trimRequest.all,
     validate.login,
     loginAttempt
-)
-
-router.get(
-    '/editProfile',
-    authenticateUser,
-    edit
-)
-
-router.post(
-    '/updateProfile',
-    [authenticateUser,
-    trimRequest.all,
-    // validate.updateProfile,
-    uploadImage.single('image') ],
-    update
 )
 
 router.get(
