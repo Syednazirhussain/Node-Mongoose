@@ -26,6 +26,19 @@ router.get(
     home
 )
 
+/* ------------ Post Controller ------------ */ 
+
+const { 
+    postIndex
+} = require('./../app/controller/PostController')
+
+router.get(
+    '/posts', 
+    authenticateUser, 
+    postIndex
+)
+
+
 /* ------------ User Controller ------------ */ 
 
 const { 
