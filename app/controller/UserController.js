@@ -42,6 +42,6 @@ exports.storeToken = async (req, res) => {
             res.status(StatusCodes.OK).json({ error: 0, message: 'Token Already Exist' })
         }
     } catch (error) {
-        res.render('errors/500', { message: error.message })
+        res.render('errors/500', { error: 1, message: error.message })
     }
 }
