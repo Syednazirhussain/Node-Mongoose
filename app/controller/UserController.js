@@ -10,20 +10,15 @@ exports.storeToken = async (req, res) => {
 
     try {
 
-        console.log(req.session)
-        console.log(req.body)
+        let user_id = req.session.user_id
 
-        var user_id = req.session.user_id
-
-        var deviceCheck = await client.db("node-mongoose").collection('users').findOne({
+        let deviceCheck = await client.db("node-mongoose").collection('users').findOne({
             devices: {
                 $elemMatch: {
                     device_token: req.body.device_token
                 }
             }, "_id": new ObjectId(user_id)
         })
-
-        console.log(deviceCheck)
 
         req.session.device_token = req.body.device_token
 

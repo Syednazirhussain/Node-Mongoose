@@ -1,0 +1,71 @@
+<%- include('./../layout/head') %>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard v1</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">Posts</h3>
+                            <button class="btn btn-primary pull-left">Add Post</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Body</th>
+                                    <th>User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% posts.forEach((post, index) => { %>
+                                <tr>
+                                    <td><%= (index + 1) %></td>
+                                    <td><%= post.title %></td>
+                                    <td><%= post.body %></td>
+                                    <td><%= post.user.name %></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<%- include('./../layout/footer') %>

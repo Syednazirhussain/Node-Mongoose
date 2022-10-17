@@ -44,11 +44,22 @@ router.post(
     '/updateProfile',
     [authenticateUser,
     trimRequest.all,
-    validate.updateProfile,
+    // validate.updateProfile,
     uploadImage.single('image') ],
     update
 )
 
+/* ------------ Post Controller ------------ */ 
+
+const { 
+    postIndex
+} = require('./../app/controller/PostController')
+
+router.get(
+    '/posts', 
+    authenticateUser, 
+    postIndex
+)
 
 /* ------------ User Controller ------------ */ 
 
