@@ -26,8 +26,16 @@ exports.postIndex = async (req, res) => {
         res.status(StatusCodes.OK).render('post/index', {
             posts: posts
         })
-    } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 1, message: error.message })
-    }
 
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+    }
+}
+
+exports.postCreate = async (req, res) => {
+    try {
+        res.status(StatusCodes.OK).render('post/create')
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+    }
 }

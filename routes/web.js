@@ -29,7 +29,8 @@ router.get(
 /* ------------ Post Controller ------------ */ 
 
 const { 
-    postIndex
+    postIndex,
+    postCreate
 } = require('./../app/controller/PostController')
 
 router.get(
@@ -38,6 +39,11 @@ router.get(
     postIndex
 )
 
+router.get(
+    '/posts/create', 
+    authenticateUser, 
+    postCreate
+)
 
 /* ------------ User Controller ------------ */ 
 
