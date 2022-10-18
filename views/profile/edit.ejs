@@ -36,14 +36,17 @@
                                     <!-- text input -->
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input type="text" class="form-control" name="name" value="<%= user.name %>" placeholder="Enter Name">
+                                        <input type="text" class="form-control" name="name"
+                                            value="<%= user.name %>" placeholder="Enter Name">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <!-- text input -->
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" name="email" minlength="5" maxlength="50" value="<%= user.email %>" placeholder="Enter Email" readonly>
+                                        <input type="email" class="form-control" name="email" minlength="5"
+                                            maxlength="50" value="<%= user.email %>" placeholder="Enter Email"
+                                            readonly>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -51,37 +54,32 @@
                                         <label for="exampleInputFile">Image</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                            <input type="file" name="image" class="custom-file-input" id="customFile" accept="image/*">
-                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                                <input type="file" name="image" class="custom-file-input"
+                                                    id="customFile" accept="image/*">
+                                                <label class="custom-file-label" for="customFile">Choose
+                                                    file</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="<%= user.image %>" data-toggle="lightbox" target="_blank" data-title="<%= user.image %>">
-                                    <img src="<%= user.image %>" class="img-fluid mb-2" style="width: 100px;height: 100px;" alt="black sample">
+                                    <a href="<%= user.image %>" data-toggle="lightbox" target="_blank"
+                                        data-title="<%= user.image %>">
+                                        <img src="<%= user.image %>" class="img-fluid mb-2"
+                                            style="width: 100px;height: 100px;" alt="black sample">
                                     </a>
-                                    </div> 
+                                </div>
                             </div>
                             <div class="card-footer">
-                                <input type="submit" class="btn btn-primary" id="save" value="Submit"></input>
-                                <input type="button" class="btn btn-default" id="cancel" value="Cancel"></input>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <a href="/home" class="btn btn-default">Cancel</a>
                             </div>
-                            </div>
-                            
                         </form>
                     </div>
-                    </div>
-                    <!-- /.card-body -->
                 </div>
             </div>
+            <!-- /.card-body -->
         </div>
     </div>
 </section>
 
 <!-- /.content -->
 <%- include('./../layout/footer') %>
-
-<script>
-    $('#cancel').click(function () {
-        window.location.href = "/";
-    });
-</script>

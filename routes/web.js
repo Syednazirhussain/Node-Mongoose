@@ -42,10 +42,7 @@ router.get(
 
 router.post(
     '/updateProfile',
-    [authenticateUser,
-    trimRequest.all,
-    // validate.updateProfile,
-    uploadImage.single('image') ],
+    [ authenticateUser, trimRequest.all, uploadImage.single('image') ],
     update
 )
 
