@@ -7,17 +7,8 @@
     <br>
 <% } } %>
 
-<% if(typeof error !=='undefined' ) { if(error !='' ) { %>
-    <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h5><i class="icon fas fa-check"></i> Alert!</h5>
-        <%= error %>
-    </div>
-    <br>
-<% } } %>
-
 <% if(typeof messages.message !=='undefined' ) { %>
-    <div class="alert alert-danger alert-dismissible">
+    <div class="alert alert-info alert-dismissible">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&times;</button>
         <h5><i class="icon fas fa-ban"></i> Alert!</h5>
@@ -26,19 +17,28 @@
     <br>
 <% } %>
 
-<% if (typeof messages.error !=='undefined' ) { %>
+<% if (typeof messages.errors !== 'undefined' ) { %>
     <div class="alert alert-danger alert-dismissible">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&times;</button>
         <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-        <% if (Array.isArray(messages.error)) { %>
-            <ul>
-                <% messages.error.forEach(function(e) { %>
-                    <li>
-                        <%= e.msg %>
-                    </li>
-                <% }); %>
-            </ul>
-        <% } %>
+        <ul>
+            <% messages.errors.forEach(function(e) { %>
+                <li>
+                    <%= e.msg %>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+<% } %>
+
+<% if (typeof messages.error !== 'undefined' ) { %>
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert"
+            aria-hidden="true">&times;</button>
+        <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+        <ul>
+            <%= messages.error %>
+        </ul>
     </div>
 <% } %>
