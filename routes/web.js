@@ -77,6 +77,27 @@ router.post(
     storeToken
 )
 
+/* ------------ Notifications Controller ------------ */ 
+
+const { 
+    notifications,
+    sendNotification
+} = require('../app/controller/NotificationsController')
+
+router.get(
+    '/notifications',
+    authenticateUser,
+    notifications
+)
+
+router.post(
+    '/send-notification',
+    authenticateUser,
+    trimRequest.all,
+    validate.notifications,
+    sendNotification
+)
+
 /* ------------ Auth Controller ------------ */ 
 
 const { 
