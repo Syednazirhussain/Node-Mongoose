@@ -91,10 +91,10 @@
 
         console.log(payload)
 
-        const title = 'Notification Title'
+        const title = payload.notification.title
         
         const options = {
-            body: 'Notification Body',
+            body: payload.notification.body,
             icon: 'http://127.0.0.1:5000/favicon.ico',
         }
 
@@ -102,7 +102,7 @@
 
         notify.onclick = (event) => {
             event.preventDefault()
-            window.open('https://www.google.com', '_blank')
+            window.open(payload.notification.click_action, '_blank')
         }
 
         loadNotificationCount()
