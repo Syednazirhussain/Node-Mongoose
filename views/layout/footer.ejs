@@ -66,7 +66,7 @@
                 console.log("Token: ", currentToken)
 
                 $.ajax({
-                    url: '<%= url("user/store-token") %>',
+                    url: 'user/store-token',
                     type: 'POST',
                     data: {
                         device_token: currentToken,

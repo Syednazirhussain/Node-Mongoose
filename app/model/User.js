@@ -31,6 +31,9 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.ObjectId,
         required: [true, 'must associated with any role like admin, moderator, or user'],
     },
+    devices: {
+        type: Array
+    },
     created_at: {
         type: Date,
         default: Date.now

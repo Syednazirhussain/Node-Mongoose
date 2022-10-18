@@ -3,6 +3,8 @@ const { pushNotification } = require('./../helper/fcm')
 exports.home = (req, res) => {
 
     try {
+
+        req.app.locals.fields = ''
         
         pushNotification({
             subject: 'My First Notification',

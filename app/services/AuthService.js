@@ -65,7 +65,9 @@ async function login(req) {
         req.session.email = userExist.email
         req.session.image = userExist.image
 
-        req.app.locals.admin = userExist;
+        req.app.locals.admin = userExist
+
+        req.app.locals.fields = ''
 
         return { error: 0, message: 'Login Successfull' }
 

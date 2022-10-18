@@ -1,0 +1,51 @@
+<%- include('./../layout/head') %>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/notifications">Notification</a></li>
+                    <li class="breadcrumb-item active">Create</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <%- include('./../layout/alert-messages') %>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Create Notification</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="<%= url('send-notification') %>" method="POST">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" name="title" class="form-control" placeholder="Enter title" value="<%- ( (typeof fields !== 'undefined') && ( fields != '' ) ) ? fields.title : '' %>" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Body</label>
+                                <textarea class="form-control" name="body" rows="3" placeholder="Enter body" style="resize: none;" required><%- ( (typeof fields !== 'undefined') && ( fields != '' ) ) ? fields.body : '' %></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                                <a href="/home" class="btn btn-default">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<%- include('./../layout/footer') %>

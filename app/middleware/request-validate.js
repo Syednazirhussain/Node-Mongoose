@@ -129,6 +129,45 @@ exports.updateProfile = [
 ]
 
 /**
+ * Validates notifications request
+*/
+exports.notifications = [
+    check('title')
+        .not()
+        .isEmpty()
+        .withMessage('Title is required')
+        .bail()
+        .isLength({ min: 5 })
+        .withMessage('Title must be at least 5 chars long'),
+        check('body')
+        .not()
+        .isEmpty()
+        .withMessage('Body is required')
+        .bail()
+        .isLength({ min: 5 })
+        .withMessage('Body must be at least 5 chars long'),
+        (req, res, next) => {
+             // Finds the validation errors in this request and wraps them in an object with handy functions
+             const errors = validationResult(req)
+            
+             if (errors.isEmpty()) {
+                 
+                 next()
+             } else {
+                 req.app.locals.fields = req.body;
+                 if (req.xhr || req.is('*/json')) {
+                     res.json({ error: 1, errors: errors.array() })
+                 } else {
+                     // console.log(errors.array());
+                     let backURL = req.header('Referer') || '/'           
+                     req.flash('error', errors.array())
+                     res.redirect(backURL)
+                 }
+             }
+        }
+]
+
+/**
  * Validates login request
 */
 exports.login = [
