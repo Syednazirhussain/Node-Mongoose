@@ -14,7 +14,7 @@ const postList = async (req, res) => {
       },
     }
     
-    console.log(options);
+    // console.log(options);
 
     /*
     Post.paginate({}, options, function (err, result) {

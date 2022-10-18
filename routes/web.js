@@ -50,7 +50,8 @@ router.post(
 
 const { 
     postIndex,
-    postCreate
+    postCreate,
+    postStore
 } = require('./../app/controller/PostController')
 
 router.get(
@@ -64,6 +65,13 @@ router.get(
     authenticateUser, 
     postCreate
 )
+
+router.post(
+    '/posts/store', 
+    authenticateUser,
+    postStore
+)
+
 
 /* ------------ User Controller ------------ */ 
 

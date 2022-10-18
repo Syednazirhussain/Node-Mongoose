@@ -20,22 +20,22 @@ async function register(req, res) {
             role_id: new ObjectId('633c451264ea5bce8d60dece')
         })
 
-        let link = `${process.env.APP_BASE_PATH}`;
+        let link = `${process.env.APP_BASE_PATH}`
 
-        var html = fs.readFileSync(process.cwd() + '/views/emails/user-registration.ejs').toString();
+        var html = fs.readFileSync(process.cwd() + '/views/emails/user-registration.ejs').toString()
         
-        html = html.replace('{{NAME}}', name);
-        html = html.replace('{{URL}}', link);
+        html = html.replace('{{NAME}}', name)
+        html = html.replace('{{URL}}', link)
 
-            // Send confirmation email
-            await mailer.send(
-                process.env.FROM_EMAIL,
-                email,
-                "User Registered",
-                html
-            );
+        // Send confirmation email
+        await mailer.send(
+            process.env.FROM_EMAIL,
+            email,
+            "User Registered",
+            html
+        )
 
-        return { error: 0, success: 'User registered successfully.' }
+        return { error: 0, message: 'User registered successfully.' }
 
     } catch (error) {
         return { error: 1, message: error.message }

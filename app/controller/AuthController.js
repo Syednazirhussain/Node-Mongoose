@@ -6,18 +6,18 @@ exports.getregister = async (req, res) => {
 }
 
 exports.register = async (req, res) => {
+    
     try {
+
         let result = await authService.register(req)
 
         if (result.error == 1) { 
             req.flash('message', result.message)
-            res.redirect("/register")
         } else {
-
-            req.flash('success', result.success)
-            res.redirect("/register")
+            req.flash('success', result.message)
         }
-
+        
+        res.redirect("/register")
     } catch(error) {
         res.render('errors/500', { message: error.message })
     }

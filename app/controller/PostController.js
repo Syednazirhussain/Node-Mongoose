@@ -1,5 +1,6 @@
-const { StatusCodes } = require("http-status-codes")
+const Validator = require('validatorjs')
 const { MongoClient } = require('mongodb')
+const { StatusCodes } = require("http-status-codes")
 
 const url = process.env.DB_URI
 const client = new MongoClient(url, {
@@ -21,7 +22,7 @@ exports.postIndex = async (req, res) => {
             }
         }]).unwind('$user').sort({ 'created_at': -1 }).toArray();
 
-        console.log(posts)
+        // console.log(posts)
 
         res.status(StatusCodes.OK).render('post/index', {
             posts: posts
@@ -39,3 +40,44 @@ exports.postCreate = async (req, res) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
     }
 }
+
+exports.postStore = async (req, res) => {
+
+    try {
+
+        let inputData = {...req.body}
+
+        let rules = {
+            title: 'required',
+            body: 'required'
+        }
+
+        let validator = new Validator(inputData, rules, {
+            "required.title": ":attribute is required",
+            "required.body": ":attribute is required"
+        })
+
+        if (validator.fails()) {
+
+            req.app.locals.fields = req.body
+            console.log(validator.errors)
+
+            let errors = [
+                validator.errors.get('title'), 
+                validator.errors.get('body')
+            ]
+
+            errors = errors.flatMap(e => e)
+            req.flash('validation_errors', errors)
+        } else {
+            req.app.locals.fields = {}
+            console.log(req.body)
+        }
+
+        res.status(StatusCodes.OK).render('post/create')
+    } catch (error) {
+
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+    }
+}
+
