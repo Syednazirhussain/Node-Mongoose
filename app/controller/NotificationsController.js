@@ -1,10 +1,10 @@
-const notificationService = require('../services/notificationService')
+const notificationService = require('../services/NotificationService')
 const { StatusCodes } = require('http-status-codes')
 
 exports.notifications = async (req, res) => {
 
     try {
-        res.status(StatusCodes.OK).render('notifications/create', { message: req.flash('message') });
+        res.status(StatusCodes.OK).render('notifications/create', { message: req.flash('message') })
 
     } catch(error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })

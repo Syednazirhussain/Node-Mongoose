@@ -106,6 +106,18 @@ router.post(
     sendNotification
 )
 
+/* ------------ Payment Controller ------------ */ 
+
+const { 
+    checkout
+} = require('../app/controller/PaymentController')
+
+router.post(
+    '/create-checkout-session',
+    // authenticateUser,
+    checkout
+)
+
 /* ------------ Auth Controller ------------ */ 
 
 const { 

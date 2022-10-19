@@ -12,7 +12,7 @@ const common_helper = require('./app/helper/common')
 
 const { connectDB } = require('./database/mongoose')
 
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: '*' }))
 
 common_helper(app)
 // For parsing json
@@ -65,7 +65,7 @@ const start = async () => {
 
     try {
 
-        await connectDB(process.env.MONGO_URI);
+        await connectDB(process.env.MONGO_URI)
         app.listen(port, () =>
             console.log(`Server is listening on port ${port}...`)
         )
