@@ -1,45 +1,69 @@
-const axios = require("axios");
-const { ObjectId } = require("mongodb");
-const User = require("../model/User");
+const axios = require("axios")
+const { ObjectId } = require("mongodb")
+const User = require("./../model/User")
 
 const send = async (req) => {
+
   try {
-    let device_token = await User.findOne({
-      email: "tatozynyj@mailinator.com",
-    });
-    device_token = device_token.devices[0].device_token;
 
-    const headers = {
-      Authorization: "key=" + process.env.FCM_SERVER_KEY,
-    };
+    if (ObjectId.isValid(req.body.user_id)) {
 
-    const notification = {
-      notification: {
-        title: req.body.title,
-        body: req.body.body,
-        click_action: "http://localhost:5000/",
-      },
-      to: device_token,
-    };
+      let user = await User.findOne({ _id: req.body.user_id }).select({ devices: 1, _id: 0 })
+      // let user = await User.find({ _id: req.body.user_id }, { _id: 0, devices: 1 })
 
-    axios
-      .post("https://fcm.googleapis.com/fcm/send", notification, {
-        headers: headers,
+      let tokens = []
+      if (user.devices.length > 0) {
+        tokens = user.devices.map(o => o.device_token)
+      }
+      
+      // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
+      
+      const headers = {
+        'Authorization': 'Bearer '+ process.env.FCM_SERVER_KEY,
+        'Content-Type': 'application/json'
+      }
+
+      // Notification object reference
+      // https://firebase.google.com/docs/cloud-messaging/http-server-ref
+      // https://firebase.google.com/docs/cloud-messaging/android/device-group
+
+      const payload = {
+        data: {  //you can send only notification or only data(or include both)
+          title: req.body.title,
+          message: req.body.body,
+          click_action: process.env.APP_BASE_PATH,
+          sound: 'default'
+        },
+        notification: {
+          title: req.body.title,
+          body: req.body.body,
+          click_action: process.env.APP_BASE_PATH
+        },
+        registration_ids: tokens, // This is for multiple devices
+        // to: token, // This is for single device
+      }
+
+      axios.post(process.env.FCM_NOTIFICATION_URL, payload, {
+        headers: headers
+      }).then((res) => {
+        // console.log(res.status)
+        // console.log(res.statusText)
+        console.log(res.data)
+      }).catch((error) => {
+        return { error: 1, message: error.message }
       })
-      .then((res) => {
-        console.log(`Status: ${res.status}`);
-        console.log("Body: ", res.data);
-      })
-      .catch((err) => {
-        return { error: 1, message: err };
-      });
 
-    return { error: 0, message: "Notification sent successfully" };
+      return { error: 0, message: "Notification sent successfully" }
+    } else {
+
+      return { error: 1, message: 'Invalid user' }
+    }
   } catch (error) {
-    return { error: 1, message: error.message };
+
+    return { error: 1, message: error.message }
   }
 }
 
 module.exports = {
-    send
+  send
 }
