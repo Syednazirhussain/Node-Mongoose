@@ -2,14 +2,14 @@ const axios = require("axios")
 const { ObjectId } = require("mongodb")
 const User = require("./../model/User")
 
-const send = async (req) => {
+const send = async ({ user_id, title, body }) => {
 
   try {
 
-    if (ObjectId.isValid(req.body.user_id)) {
+    if (ObjectId.isValid(user_id)) {
 
-      let user = await User.findOne({ _id: req.body.user_id }).select({ devices: 1, _id: 0 })
-      // let user = await User.find({ _id: req.body.user_id }, { _id: 0, devices: 1 })
+      let user = await User.findOne({ _id: user_id }).select({ devices: 1, _id: 0 })
+      // let user = await User.find({ _id: user_id }, { _id: 0, devices: 1 })
 
       let tokens = []
       if (user.devices.length > 0) {
@@ -29,14 +29,14 @@ const send = async (req) => {
 
       const payload = {
         data: {  //you can send only notification or only data(or include both)
-          title: req.body.title,
-          message: req.body.body,
+          title: title,
+          message: body,
           click_action: process.env.APP_BASE_PATH,
           sound: 'default'
         },
         notification: {
-          title: req.body.title,
-          body: req.body.body,
+          title: title,
+          body: body,
           click_action: process.env.APP_BASE_PATH
         },
         registration_ids: tokens, // This is for multiple devices

@@ -102,7 +102,6 @@ router.post(
     '/send-notification',
     authenticateUser,
     trimRequest.all,
-    validate.notifications,
     sendNotification
 )
 

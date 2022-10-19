@@ -75,8 +75,8 @@ exports.postStore = async (req, res) => {
 
             req.app.locals.fields = {}
 
-            console.log(req.body)
-            console.log(req.session.user_id)
+            // console.log(req.body)
+            // console.log(req.session.user_id)
 
             if (ObjectId.isValid(req.session.user_id)) {
                 
