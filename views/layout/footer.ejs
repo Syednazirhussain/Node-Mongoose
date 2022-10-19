@@ -105,12 +105,41 @@
             window.open(payload.notification.click_action, '_blank')
         }
 
-        loadNotificationCount()
-        loadNotificationList()
+        // loadNotificationCount()
+        // loadNotificationList()
     })
 
     startFCM()
 
+    $('.stripe_btn').on('click', (e) => {
+        
+        fetch("/create-checkout-session", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                {
+                    items: [
+                        { id: 1, quantity: 3 },
+                        { id: 2, quantity: 1 }, 
+                    ]
+                }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                return response.json()
+            }
+        }).then(({ url }) => {
+
+            console.log("url", url)
+            window.open(url, '_blank')
+        }).catch((error) => {
+            console.log(error.message)
+        })
+    })
+    
 </script>
 
 
