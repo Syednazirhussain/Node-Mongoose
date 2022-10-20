@@ -28,7 +28,7 @@ const checkout = async ({ items }) => {
 
       }),
       success_url: process.env.APP_BASE_PATH,
-      cancel_url: process.env.APP_BASE_PATH,
+      cancel_url: process.env.APP_BASE_PATH+'/cart',
     })
 
     return { error: 0, message: "CheckOut link generated successfully", data: session.url }

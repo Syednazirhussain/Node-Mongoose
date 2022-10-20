@@ -22,9 +22,7 @@ exports.update = async (req, res) => {
 
     try {
 
-        console.log(req.files)
-
-        req.body.image = req.files[0]
+        req.body.image = req.file
         let update = await profileService.update(req)
 
         if (update.error == 1) { 

@@ -42,7 +42,7 @@ router.get(
 
 router.post(
     '/updateProfile',
-    [ authenticateUser, trimRequest.all, uploadImage.array('image') ],
+    [ authenticateUser, trimRequest.all, uploadImage.single('image') ],
     update
 )
 
@@ -115,6 +115,18 @@ router.post(
     '/create-checkout-session',
     authenticateUser,
     checkout
+)
+
+/* ------------ Shopping Cart Controller ------------ */ 
+
+const { 
+    cart
+} = require('../app/controller/CartController')
+
+router.get(
+    '/cart',
+    authenticateUser,
+    cart
 )
 
 /* ------------ Auth Controller ------------ */ 
