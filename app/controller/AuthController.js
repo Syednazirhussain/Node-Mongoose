@@ -2,7 +2,7 @@ const authService = require('./../services/AuthService')
 const { StatusCodes } = require('http-status-codes')
 
 exports.getregister = async (req, res) => {
-    res.render('auth/register', { success: req.flash('success'), message: req.flash('message') });
+    res.render('auth/register');
 }
 
 exports.register = async (req, res) => {
@@ -75,7 +75,7 @@ exports.logout = async (req, res) => {
 }
 
 exports.forgetPasswordView = async (req, res) => {
-    res.render('auth/forget-password', { message: req.flash('message'), success: req.flash('success') }) 
+    res.render('auth/forget-password') 
 }
 
 exports.forgetPasswordPost = async (req, res) => {

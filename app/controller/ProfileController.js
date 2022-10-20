@@ -9,7 +9,7 @@ exports.edit = async (req, res) => {
         if (edit.error == 1) { 
             res.redirect("/")
         } else {
-            res.status(StatusCodes.OK).render('profile/edit', { user: edit.user, name: req.session.name, image: req.session.image, success: req.flash('success'), message: req.flash('message') });
+            res.status(StatusCodes.OK).render('profile/edit', { user: edit.user });
         }
 
     } catch(error) {
@@ -26,7 +26,7 @@ exports.update = async (req, res) => {
         let update = await profileService.update(req)
 
         if (update.error == 1) { 
-            req.flash("error", update.message)
+            req.flash("message", update.message)
         } else {
             req.flash("success", update.message)
         }
