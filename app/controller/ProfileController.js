@@ -22,16 +22,14 @@ exports.update = async (req, res) => {
 
     try {
 
-        console.log(req.files);
+        console.log(req.files)
 
         req.body.image = req.files[0]
         let update = await profileService.update(req)
 
         if (update.error == 1) { 
-            
             req.flash("error", update.message)
         } else {
-
             req.flash("success", update.message)
         }
         

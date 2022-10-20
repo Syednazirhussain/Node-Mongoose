@@ -45,6 +45,11 @@ exports.postStore = async (req, res) => {
 
     try {
 
+        console.log(req.body)
+
+        console.log(req.file)
+        console.log(req.files)
+
         let inputData = {...req.body}
 
         let rules = {
@@ -75,7 +80,6 @@ exports.postStore = async (req, res) => {
 
             req.app.locals.fields = {}
 
-            // console.log(req.body)
             // console.log(req.session.user_id)
 
             if (ObjectId.isValid(req.session.user_id)) {
@@ -86,12 +90,12 @@ exports.postStore = async (req, res) => {
                     user_id: ObjectId(req.session.user_id),
                     created_at: new Date().toISOString()
                 }
-            
+                
+                /*
                 let newPost = await client.db("node-mongoose")
                                             .collection('posts')
                                             .insertOne(post)
-    
-                console.log(newPost)
+                */
             }
 
             res.status(StatusCodes.OK).redirect('/posts')

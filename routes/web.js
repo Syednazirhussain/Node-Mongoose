@@ -68,7 +68,7 @@ router.get(
 
 router.post(
     '/posts/store', 
-    authenticateUser,
+    [ authenticateUser, trimRequest.all, uploadImage.single('image') ],
     postStore
 )
 
