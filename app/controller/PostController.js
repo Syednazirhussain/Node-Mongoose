@@ -45,11 +45,6 @@ exports.postStore = async (req, res) => {
 
     try {
 
-        console.log(req.body)
-
-        console.log(req.file)
-        console.log(req.files)
-
         let inputData = {...req.body}
 
         let rules = {
@@ -80,22 +75,23 @@ exports.postStore = async (req, res) => {
 
             req.app.locals.fields = {}
 
-            // console.log(req.session.user_id)
-
             if (ObjectId.isValid(req.session.user_id)) {
                 
+                console.log(req.file.path)
+
                 let post = {
                     title: req.body.title,
                     body: req.body.body,
                     user_id: ObjectId(req.session.user_id),
+                    image: req.file.path,
                     created_at: new Date().toISOString()
                 }
                 
-                /*
+                
                 let newPost = await client.db("node-mongoose")
                                             .collection('posts')
                                             .insertOne(post)
-                */
+                console.log(newPost)
             }
 
             res.status(StatusCodes.OK).redirect('/posts')
@@ -103,6 +99,20 @@ exports.postStore = async (req, res) => {
 
     } catch (error) {
 
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+    }
+}
+
+exports.postEdit = async (req, res) => {
+    
+    try {
+
+        let post = await client.db("node-mongoose")
+                                    .collection('posts')
+                                    .findOne({ _id: ObjectId(req.params.id) })
+        console.log(post)
+        res.status(StatusCodes.OK).render('post/edit', { post: post })
+    } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
     }
 }

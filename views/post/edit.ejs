@@ -9,7 +9,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/posts">Post</a></li>
-                    <li class="breadcrumb-item active">Create</li>
+                    <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </div>
         </div>
@@ -23,15 +23,20 @@
             <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Create Post</h3>
+                        <h3 class="card-title">Edit Post</h3>
                     </div>
                     <%- include('./../layout/alert-messages') %>
                     <div class="card-body">
-                        <form action="/posts/store" method="POST" enctype="multipart/form-data">
+                        <% if(typeof post !=='undefined' ) { if (post != '') { %>
+                        <form action="javascript:void(0);" method="POST" enctype="multipart/form-data">
                             <div class="form-group text-center">
-                                <img id="blah" src="<%= url('public/images/uploadimage.png') %>" class="rounded" accept="image/*">
+                                <% if (post.hasOwnProperty('image')) { %>
+                                    <img id="blah" src="<%= url(post.image) %>" class="rounded">
+                                <% } else { %>
+                                    <img id="blah" src="<%= url('public/images/uploadimage.png') %>" class="rounded">
+                                <% } %>
                                 <i class="fa fa-edit">
-                                    <input class="custom-file-input" accept="image/*" name="image" type='file' id="imgInp" />
+                                    <input class="custom-file-input" accept="image/*" name="image" type="file" id="imgInp" />
                                 </i>
                             </div>
                             <div class="form-group">
@@ -41,7 +46,7 @@
                                     type="text" 
                                     class="form-control" 
                                     placeholder="Enter post title"
-                                    value="<% if (typeof fields !== 'undefined') { if (fields != '') { %><%= fields.title %><% } } %>">
+                                    value="<%= post.title %>">
                             </div>
                             <div class="form-group">
                                 <label>Body</label>
@@ -50,11 +55,12 @@
                                     class="form-control" 
                                     rows="3" 
                                     placeholder="Enter post body" 
-                                    style="resize: none;"><% if (typeof fields !== 'undefined') { if (fields != '') { %><%= fields.body %><% } } %></textarea>
+                                    style="resize: none;"><%= post.body %></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                             <a href="/posts" class="btn btn-default">Cancel</a>
                         </form>
+                        <% } } %>
                     </div>
                 </div>
             </div>

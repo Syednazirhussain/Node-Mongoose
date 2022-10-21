@@ -1,13 +1,4 @@
-<% if(typeof success !=='undefined' ) { if(success !='' ) { %>
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h5><i class="icon fas fa-check"></i> Alert!</h5>
-        <%= success %>
-    </div>
-    <br>
-<% } } %>
-
-<% if(typeof messages.success !=='undefined' ) { %>
+<% if(typeof messages.success !=='undefined') { %>
     <div class="alert alert-success alert-dismissible">
         <button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">&times;</button>

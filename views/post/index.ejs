@@ -30,22 +30,35 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th></th>
                                     <th>Title</th>
                                     <th>Body</th>
                                     <th>User</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% posts.forEach((post, index) => { %>
                                 <tr>
                                     <td><%= (index + 1) %></td>
+                                    <td>
+                                        <% if (post.hasOwnProperty('image')) { %>
+                                            <img width="60px" class="rounded" src="<%= url(post.image) %>" alt="post image">
+                                        <% } else { %>
+                                            <img width="60px" class="rounded" src="<%= url('public/images/uploadimage.png') %>" alt="default">
+                                        <% } %>
+                                    </td>
                                     <td><%= post.title %></td>
                                     <td><%= post.body %></td>
                                     <td><%= post.user.name %></td>
+                                    <td>
+                                        <a href="<%= url('posts/edit/'+post._id) %>" class="btn btn-primary">Edit</a>
+                                        <a href="javascript:void(0);" class="btn btn-danger">Delete</a>
+                                    </td>
                                 </tr>
                                 <% }) %>
                             </tbody>
