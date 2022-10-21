@@ -52,7 +52,8 @@ const {
     postIndex,
     postCreate,
     postStore,
-    postEdit
+    postEdit,
+    postUpdate
 } = require('./../app/controller/PostController')
 
 router.get(
@@ -77,6 +78,12 @@ router.get(
     '/posts/edit/:id',
     authenticateUser, 
     postEdit
+)
+
+router.put(
+    '/posts/update/:id',
+    authenticateUser, 
+    postUpdate
 )
 
 /* ------------ User Controller ------------ */ 

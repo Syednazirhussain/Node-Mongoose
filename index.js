@@ -8,6 +8,7 @@ const path = require('path')
 const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const session = require("express-session")
+const methodOverride = require('method-override')
 const common_helper = require('./app/helper/common')
 
 const { connectDB } = require('./database/mongoose')
@@ -43,7 +44,7 @@ app.set('view engine', 'ejs')
 
 app.use(flash())
 app.use(express.json())
-
+app.use(methodOverride())
 app.use(express.static('public'))
 app.use(
     express.static(path.join(__dirname, "node_modules/"))

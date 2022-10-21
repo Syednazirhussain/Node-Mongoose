@@ -41,7 +41,7 @@
                                     type="text" 
                                     class="form-control" 
                                     placeholder="Enter post title"
-                                    value="<% if (typeof fields !== 'undefined') { if (fields != '') { %><%= fields.title %><% } } %>">
+                                    value="<% if (typeof fields !== 'undefined') { if (fields != null) { %><%= fields.title %><% } } %>">
                             </div>
                             <div class="form-group">
                                 <label>Body</label>
@@ -50,7 +50,7 @@
                                     class="form-control" 
                                     rows="3" 
                                     placeholder="Enter post body" 
-                                    style="resize: none;"><% if (typeof fields !== 'undefined') { if (fields != '') { %><%= fields.body %><% } } %></textarea>
+                                    style="resize: none;"><% if (typeof fields !== 'undefined') { if (fields != null) { %><%= fields.body %><% } } %></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                             <a href="/posts" class="btn btn-default">Cancel</a>

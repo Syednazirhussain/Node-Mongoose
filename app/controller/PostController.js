@@ -110,8 +110,21 @@ exports.postEdit = async (req, res) => {
         let post = await client.db("node-mongoose")
                                     .collection('posts')
                                     .findOne({ _id: ObjectId(req.params.id) })
-        console.log(post)
         res.status(StatusCodes.OK).render('post/edit', { post: post })
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+    }
+}
+
+exports.postUpdate = async (req, res) => {
+    
+    try {
+
+        console.log(req.file)
+        console.log(req.params.id);
+        console.log(req.body)
+
+        res.status(StatusCodes.OK).redirect('/posts')
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
     }
