@@ -117,7 +117,7 @@ exports.postEdit = async (req, res) => {
 }
 
 exports.postUpdate = async (req, res) => {
-    
+    console.log('asdsaf')
     try {
 
         let inputs = {...req.body}
