@@ -121,21 +121,48 @@ exports.postUpdate = async (req, res) => {
     try {
 
         let inputs = {...req.body}
-        
-        if (typeof req.file != 'undefined') {
-            inputs['image'] = req.file.path
+
+        let rules = {
+            title: 'required',
+            body: 'required'
         }
 
-        let post = await client.db("node-mongoose")
-                                .collection('posts')
-                                .updateOne(
-                                    { _id: ObjectId(req.params.id) },
-                                    { $set: inputs }
-                                )
-        console.log(post)
-        
-        req.flash('success', 'Post updated successfully')
-        res.status(StatusCodes.OK).redirect('/posts')
+        let validator = new Validator(inputs, rules, {
+            "required.title": ":attribute is required",
+            "required.body": ":attribute is required"
+        })
+
+        if (validator.fails()) {
+
+            req.app.locals.fields = req.body
+            console.log(validator.errors)
+
+            let errors = [
+                validator.errors.get('title'), 
+                validator.errors.get('body')
+            ]
+
+            errors = errors.flatMap(e => e)
+            req.flash('validation_errors', errors)
+
+            res.status(StatusCodes.OK).redirect('/post/edit/'+req.params.id)
+        } else {
+
+            if (typeof req.file != 'undefined') {
+                inputs['image'] = req.file.path
+            }
+    
+            let post = await client.db("node-mongoose")
+                                    .collection('posts')
+                                    .updateOne(
+                                        { _id: ObjectId(req.params.id) },
+                                        { $set: inputs }
+                                    )
+            console.log(post)
+            
+            req.flash('success', 'Post updated successfully')
+            res.status(StatusCodes.OK).redirect('/posts')
+        }
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
     }
