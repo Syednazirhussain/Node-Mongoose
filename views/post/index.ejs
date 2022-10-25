@@ -46,7 +46,7 @@
                                 <tr>
                                     <td><%= (index + 1) %></td>
                                     <td>
-                                        <% if (post.hasOwnProperty('image')) { %>
+                                        <% if (post.hasOwnProperty('image') && post.image != null) { %>
                                             <img width="60px" class="rounded" src="<%= url(post.image) %>" alt="post image">
                                         <% } else { %>
                                             <img width="60px" class="rounded" src="<%= url('public/images/uploadimage.png') %>" alt="default">
@@ -66,6 +66,36 @@
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+
+                        <% if (pages > 0) { %>
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                <% if (current == 1) { %>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">First</a></li>
+                                <% } else { %>
+                                    <li class="page-item"><a  class="page-link" href="/posts/1">First</a></li>
+                                <% } %>
+                                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                                <% if (i !== 1) { %>
+                                    <li class="disabled"><a>...</a></li>
+                                <% } %>
+                                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                                    <% if (i == current) { %>
+                                        <li class="page-item active"><a class="page-link" href="javascript:void(0);"><%= i %></a></li>
+                                    <% } else { %>
+                                        <li class="page-item"><a class="page-link" href="/posts/<%= i %>"><%= i %></a></li>
+                                    <% } %>
+                                    <% if (i == Number(current) + 4 && i < pages) { %>
+                                        <li class="disabled"><a>...</a></li>
+                                    <% } %>
+                                <% } %>
+                                <% if (current == pages) { %>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Last</a></li>
+                                <% } else { %>
+                                    <li  class="page-item"><a class="page-link" href="/posts/<%= pages %>">Last</a></li>
+                                <% } %>
+                            </ul>
+                        <% } %>
+                        <!--
                         <ul class="pagination pagination-sm m-0 float-right">
                             <li class="page-item"><a class="page-link" href="javascript:void(0);">&laquo;</a></li>
                             <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
@@ -73,6 +103,7 @@
                             <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
                             <li class="page-item"><a class="page-link" href="javascript:void(0);">&raquo;</a></li>
                         </ul>
+                        -->
                     </div>
                 </div>
             </div>

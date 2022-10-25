@@ -21,3 +21,7 @@ https://www.youtube.com/watch?v=XeDM28c5kO4&list=PLwGdqUZWnOp1P9xSsJg7g3AY0CUjs-
 
 https://github.com/SHAHIDNX/NODEJS_pushnotifications
 https://firebase.google.com/docs/cloud-messaging/http-server-ref
+
+### Pagination EJS
+
+https://evdokimovm.github.io/javascript/nodejs/mongodb/pagination/expressjs/ejs/bootstrap/2017/08/20/create-pagination-with-nodejs-mongodb-express-and-ejs-step-by-step-from-scratch.html

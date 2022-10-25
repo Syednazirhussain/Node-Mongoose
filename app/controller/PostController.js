@@ -11,7 +11,12 @@ exports.postIndex = async (req, res) => {
 
     try {
 
+        let count = await client.db('node-mongoose').collection('posts').count()
+
         // let posts = await client.db("node-mongoose").collection('posts').find({}).toArray()
+
+        let perPage = 3
+        let page = req.params.page || 1
 
         let posts = await client.db('node-mongoose').collection('posts').aggregate([{
             $lookup : {
@@ -20,12 +25,17 @@ exports.postIndex = async (req, res) => {
                 foreignField:"_id",
                 as:"user"
             }
-        }]).unwind('$user').sort({ 'created_at': -1 }).toArray();
-
-        // console.log(posts)
+        }])
+        .unwind('$user')
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .sort({ 'created_at': -1 })
+        .toArray()
 
         res.status(StatusCodes.OK).render('post/index', {
-            posts: posts
+            posts: posts,
+            current: page,
+            pages: Math.ceil(count / perPage)
         })
 
     } catch (error) {
@@ -76,14 +86,17 @@ exports.postStore = async (req, res) => {
             req.app.locals.fields = {}
 
             if (ObjectId.isValid(req.session.user_id)) {
-                
-                console.log(req.file.path)
+
+                let image_path = null
+                if (typeof req.file != 'undefined') {
+                    image_path = req.file.path
+                }
 
                 let post = {
                     title: req.body.title,
                     body: req.body.body,
                     user_id: ObjectId(req.session.user_id),
-                    image: req.file.path,
+                    image: image_path,
                     created_at: new Date().toISOString()
                 }
                 
@@ -98,7 +111,7 @@ exports.postStore = async (req, res) => {
         }
 
     } catch (error) {
-
+        console.log(error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
     }
 }

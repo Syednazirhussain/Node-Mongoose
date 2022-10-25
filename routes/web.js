@@ -58,7 +58,7 @@ const {
 } = require('./../app/controller/PostController')
 
 router.get(
-    '/posts', 
+    '/posts/:page', 
     authenticateUser, 
     postIndex
 )
