@@ -22,8 +22,6 @@ app.use(
     })
 )
 
-app.use(methodOverride('_method'))
-
 // For parsing application/x-www-form-urlencoded
 app.use(
     bodyParser.urlencoded({
