@@ -117,7 +117,7 @@ exports.postEdit = async (req, res) => {
 }
 
 exports.postUpdate = async (req, res) => {
-    console.log('asdsaf')
+
     try {
 
         let inputs = {...req.body}
@@ -168,3 +168,23 @@ exports.postUpdate = async (req, res) => {
     }
 }
 
+exports.postDelete = async (req, res) => {
+
+    try {
+        
+        console.log(req.params.id);
+
+        let post = await client.db("node-mongoose")
+                                .collection('posts')
+                                .deleteOne(
+                                    { _id: ObjectId(req.params.id) }
+                                )
+
+        console.log(post)
+
+        req.flash('success', 'Post deleted successfully')
+        res.status(StatusCodes.OK).redirect('/posts')
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+    }
+}
