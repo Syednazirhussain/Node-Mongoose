@@ -58,7 +58,7 @@
                                     <td>
                                         <a href="/post/edit/<%= post._id %>" class="btn btn-primary">Edit</a>
                                         <a href="javascript:void(0);" onclick="confirm('<%= post._id %>')" class="btn btn-danger">Delete</a>
-                                        <form id="deletePost" action="<%= url('post/delete/'+post._id) %>" method="POST"></form>
+                                        <form class="deletePost" method="POST"></form>
                                     </td>
                                 </tr>
                                 <% }) %>
@@ -99,9 +99,8 @@
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 console.log("Confirmed")
-
-                $("#deletePost").submit()
-
+                let url = '/post/delete/'+post_id
+                $('.deletePost').attr('action', url).submit()
             } else if (result.isDenied) {
                 console.log("Denied")
             }
