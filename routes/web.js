@@ -80,10 +80,9 @@ router.get(
     postEdit
 )
 
-router.put(
-    '/posts/update/:id',
-    authenticateUser, 
-    uploadImage.single('image'),
+router.post(
+    '/post/update/:id',
+    [ authenticateUser, trimRequest.all, uploadImage.single('image') ],
     postUpdate
 )
 

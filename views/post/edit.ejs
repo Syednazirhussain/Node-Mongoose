@@ -28,7 +28,7 @@
                     <%- include('./../layout/alert-messages') %>
                     <div class="card-body">
                         <% if(typeof post !=='undefined' ) { if (post != '') { %>
-                        <form action="/posts/update/<%= post._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                        <form action="<%= url('post/update/'+post._id) %>" method="POST" enctype="multipart/form-data">
                             <div class="form-group text-center">
                                 <% if (post.hasOwnProperty('image')) { %>
                                     <img id="blah" src="<%= url(post.image) %>" class="rounded">
