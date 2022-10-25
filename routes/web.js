@@ -53,7 +53,8 @@ const {
     postCreate,
     postStore,
     postEdit,
-    postUpdate
+    postUpdate,
+    postDelete
 } = require('./../app/controller/PostController')
 
 router.get(
@@ -84,6 +85,12 @@ router.post(
     '/post/update/:id',
     [ authenticateUser, trimRequest.all, uploadImage.single('image') ],
     postUpdate
+)
+
+router.post(
+    '/post/delete/:id',
+    authenticateUser,
+    postDelete
 )
 
 /* ------------ User Controller ------------ */ 

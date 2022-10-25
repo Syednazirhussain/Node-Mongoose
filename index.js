@@ -15,6 +15,7 @@ const { connectDB } = require('./database/mongoose')
 app.use(cors({ origin: '*' }))
 
 common_helper(app)
+
 // For parsing json
 app.use(
     bodyParser.json({

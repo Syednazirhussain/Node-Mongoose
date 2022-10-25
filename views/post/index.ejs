@@ -57,7 +57,8 @@
                                     <td><%= post.user.name %></td>
                                     <td>
                                         <a href="/post/edit/<%= post._id %>" class="btn btn-primary">Edit</a>
-                                        <a href="javascript:void(0);" class="btn btn-danger">Delete</a>
+                                        <a href="javascript:void(0);" onclick="confirm('<%= post._id %>')" class="btn btn-danger">Delete</a>
+                                        <form id="deletePost" action="<%= url('post/delete/'+post._id) %>" method="POST"></form>
                                     </td>
                                 </tr>
                                 <% }) %>
@@ -82,3 +83,29 @@
 
 
 <%- include('./../layout/footer') %>
+
+<script>
+
+    function confirm (post_id) {
+
+        Swal.fire({
+            title: 'Are you sure.?',
+            text: 'Do you want to delete post having ID:'+post_id,
+            icon: 'question',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: 'No'
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                console.log("Confirmed")
+
+                $("#deletePost").submit()
+
+            } else if (result.isDenied) {
+                console.log("Denied")
+            }
+        })
+    }
+
+</script>
