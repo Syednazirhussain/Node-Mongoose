@@ -63,26 +63,26 @@ router.get(
 )
 
 router.get(
-    '/posts/create', 
+    '/post/create', 
     authenticateUser, 
     postCreate
 )
 
 router.post(
-    '/posts/store', 
+    '/post/store', 
     [ authenticateUser, trimRequest.all, uploadImage.single('image') ],
     postStore
 )
 
 router.get(
-    '/posts/edit/:id',
+    '/post/edit/:id',
     authenticateUser, 
     postEdit
 )
 
-router.put(
-    '/posts/update/:id',
-    authenticateUser, 
+router.post(
+    '/post/update/:id',
+    [ authenticateUser, trimRequest.all, uploadImage.single('image') ],
     postUpdate
 )
 

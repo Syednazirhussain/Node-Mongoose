@@ -120,10 +120,21 @@ exports.postUpdate = async (req, res) => {
     
     try {
 
-        console.log(req.file)
-        console.log(req.params.id);
-        console.log(req.body)
+        let inputs = {...req.body}
+        
+        if (typeof req.file != 'undefined') {
+            inputs['image'] = req.file.path
+        }
 
+        let post = await client.db("node-mongoose")
+                                .collection('posts')
+                                .updateOne(
+                                    { _id: ObjectId(req.params.id) },
+                                    { $set: inputs }
+                                )
+        console.log(post)
+        
+        req.flash('success', 'Post updated successfully')
         res.status(StatusCodes.OK).redirect('/posts')
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
