@@ -99,6 +99,18 @@ router.post(
     postDelete
 )
 
+/* ------------ Person Controller ------------ */ 
+
+const { 
+    personIndex
+} = require('./../app/controller/PersonController')
+
+router.get(
+    '/persons/:page',
+    authenticateUser,
+    personIndex
+)
+
 /* ------------ User Controller ------------ */ 
 
 const { 
