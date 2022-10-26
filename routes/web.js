@@ -18,13 +18,19 @@ router.get('/', (req, res) => {
 /* ------------- Home Controllers ------------- */
 
 const { 
-    home 
+    home,
+    AddBulkRecords
 } = require('./../app/controller/HomeController')
 
 router.get(
     '/home', 
     authenticateUser, 
     home
+)
+
+router.get(
+    '/addBulk',
+    AddBulkRecords
 )
 
 /* ------------ Profile Controller ------------ */ 
