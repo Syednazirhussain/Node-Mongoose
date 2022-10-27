@@ -102,13 +102,20 @@ router.post(
 /* ------------ Person Controller ------------ */ 
 
 const { 
-    personIndex
+    personIndex,
+    search
 } = require('./../app/controller/PersonController')
 
 router.get(
     '/persons/:page',
     authenticateUser,
     personIndex
+)
+
+router.post(
+    '/search',
+    authenticateUser,
+    search
 )
 
 /* ------------ User Controller ------------ */ 

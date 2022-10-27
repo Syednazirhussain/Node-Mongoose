@@ -27,7 +27,7 @@
                             <i class="fa-solid fa-filter"></i>Filter
                         </h3>
                     </div>
-                    <form action="<%= url('/persons/1') %>" method="GET">
+                    <form action="<%= url('search') %>" method="POST">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -64,9 +64,9 @@
                                     <div class="form-group">
                                         <label for="color">Eye Color</label>
                                         <select id="color" class="form-control" name="color" multiple>
-                                            <option value="green">Green</option>
-                                            <option value="blue">Blue</option>
-                                            <option value="brown">Brown</option>
+                                            <% eyecolors.forEach(function(eyecolor) { %>
+                                                <option value="<%= eyecolor %>"><%= eyecolor %></option>
+                                            <% }); %>
                                         </select>
                                     </div>
                                 </div>
@@ -74,9 +74,9 @@
                                     <div class="form-group">
                                         <label for="fruit">Favorite Fruit</label>
                                         <select id="fruit" name="fruit" class="form-control" multiple>
-                                            <option value="apple">Apple</option>
-                                            <option value="banana">Banana</option>
-                                            <option value="strawberry">Strawberry</option>
+                                            <% favfruits.forEach(function(favfruit) { %>
+                                                <option value="<%= favfruit %>"><%= favfruit %></option>
+                                            <% }); %>
                                         </select>
                                     </div>
                                 </div>
