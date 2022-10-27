@@ -11,12 +11,47 @@ exports.personIndex = async (req, res) => {
     let perPage = 10;
     let page = req.params.page || 1;
 
-    let count = await client.db("node-mongoose").collection("persons").count();
+    let personsObj = {}
+    let color
+    let fruit
+
+    let inputData = { ...req.query }
+
+    if (inputData.eyeColor != '' && inputData.eyeColor != undefined) {
+      color = inputData.eyeColor.split(",");
+    }
+
+    if (inputData.favoriteFruit != '' && inputData.favoriteFruit != undefined) {
+      fruit = inputData.favoriteFruit.split(",");
+    }
+
+    if (inputData.name != '' && inputData.name != undefined) {
+      personsObj.name = inputData.name
+    }
+    if (inputData.age != '' && inputData.age != undefined) {
+        personsObj.age = parseInt(inputData.age)
+    }
+    if (inputData.gender != '' && inputData.gender != undefined) {
+        personsObj.gender = inputData.gender
+    }
+    if (inputData.isActive != '' && inputData.isActive != undefined) {
+        personsObj.isActive = JSON.parse(inputData.isActive)
+    }
+    if (color != '' && color != undefined) {
+        personsObj.eyeColor = { $in: color }
+    }
+    if (fruit != '' && fruit != undefined) {
+        personsObj.favoriteFruit = { $in: fruit }
+    }
+
+    console.log(personsObj)
+
+    let count = await client.db("node-mongoose").collection("persons").find(personsObj).count();
 
     let persons = await client
       .db("node-mongoose")
       .collection("persons")
-      .find({})
+      .find(personsObj)
       .skip(perPage * page - perPage)
       .limit(perPage)
       .toArray();
@@ -38,7 +73,10 @@ exports.personIndex = async (req, res) => {
       current: page,
       pages: Math.ceil(count / perPage),
       eyecolors: eyecolors,
-      favfruits: favfruits
+      favfruits: favfruits,
+      filters: personsObj,
+      color: color,
+      fruit: fruit
     })
   } catch (error) {
     res
@@ -55,10 +93,11 @@ exports.search = async (req, res) => {
 
         let personsObj = {}
 
-        let inputData = { ...req.body }
-
-        let color = (inputData.color) ? (Array.isArray(inputData.color)) ? inputData.color : [inputData.color] : []
-        let fruit = (inputData.fruit) ? (Array.isArray(inputData.fruit)) ? inputData.fruit : [inputData.fruit] : []
+      let inputData = { ...req.body }
+      
+      
+      let color = (inputData.color) ? (Array.isArray(inputData.color)) ? inputData.color : [inputData.color] : []
+      let fruit = (inputData.fruit) ? (Array.isArray(inputData.fruit)) ? inputData.fruit : [inputData.fruit] : []
         
         if (inputData.name != '' && inputData.name != undefined) {
             personsObj.name = inputData.name
@@ -77,7 +116,9 @@ exports.search = async (req, res) => {
         }
         if (fruit != '' && fruit != undefined) {
             personsObj.favoriteFruit = { $in: fruit }
-        }
+      }
+      
+      console.log(personsObj)
 
         let count = await client
           .db("node-mongoose")
@@ -112,7 +153,10 @@ exports.search = async (req, res) => {
             current: page,
             pages: Math.ceil(count / perPage),
             eyecolors: eyecolors,
-            favfruits: favfruits
+            favfruits: favfruits,
+            filters: personsObj,
+            color: color,
+            fruit: fruit
         })
 
     } catch (error) { 

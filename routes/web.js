@@ -107,7 +107,7 @@ const {
 } = require('./../app/controller/PersonController')
 
 router.get(
-    '/persons/:page',
+    '/persons/:page/:value?',
     authenticateUser,
     personIndex
 )
