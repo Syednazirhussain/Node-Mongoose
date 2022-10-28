@@ -4,12 +4,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">Persons</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard v1</li>
+                    <li class="breadcrumb-item active">Persons</li>
                 </ol>
             </div>
         </div>
@@ -27,45 +27,68 @@
                             <i class="fa-solid fa-filter"></i>Filter
                         </h3>
                     </div>
-                    <form action="<%= url('search') %>" method="POST">
+                    <form action="<%= url('persons/1') %>" method="GET">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                        <input type="text" class="form-control" id="name" name="name" value="<%= data.name %>" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="age">Age</label>
-                                        <input id="age" name="age" type="number" class="form-control" placeholder="Age" min="1" max="100">
+                                        <input id="age" name="age" type="number" class="form-control" value="<%= data.age %>" placeholder="Age" min="1" max="100">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Gender</label>
                                         <select class="form-control" name="gender">
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
+                                            <option value="">Please Select</option>
+                                            <option value="male"<% if(data.gender == "male") { %>
+                                                selected
+                                                <% } %>
+                                                >Male</option>
+                                            <option value="female"
+                                            <% if(data.gender == "female") { %>
+                                                selected
+                                                <% } %>
+                                            >Female</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Active</label>
-                                        <select class="form-control" name="status">
-                                            <option value="true">True</option>
-                                            <option value="false">False</option>
+                                        <select class="form-control" name="isActive">
+                                            <option value="">Please Select</option>
+                                            <option value="true"
+                                            <% if(data.isActive == "true") { %>
+                                                selected
+                                                <% } %>
+                                            >True</option>
+                                            <option value="false"
+                                            <% if(data.isActive == "false") { %>
+                                                selected
+                                                <% } %>
+                                            >False</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="color">Eye Color</label>
-                                        <select id="color" class="form-control" name="color" multiple>
+                                        <select id="color" class="form-control" name="eyeColor" multiple>
                                             <% eyecolors.forEach(function(eyecolor) { %>
-                                                <option value="<%= eyecolor %>"><%= eyecolor %></option>
+                                                <option value="<%= eyecolor %>"
+                                                    <% if(data.eyeColor) { %>
+                                                    <% if(data.eyeColor.includes(eyecolor)) { %>
+                                                        selected
+                                                        <% } %>
+                                                    <% } %>
+                                                    ><%= eyecolor %></option>
                                             <% }); %>
                                         </select>
                                     </div>
@@ -73,9 +96,15 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="fruit">Favorite Fruit</label>
-                                        <select id="fruit" name="fruit" class="form-control" multiple>
+                                        <select id="fruit" name="favoriteFruit" class="form-control" multiple>
                                             <% favfruits.forEach(function(favfruit) { %>
-                                                <option value="<%= favfruit %>"><%= favfruit %></option>
+                                                <option value="<%= favfruit %>"
+                                                    <% if(data.favoriteFruit) { %>
+                                                    <% if(data.favoriteFruit.includes(favfruit)) { %>
+                                                        selected
+                                                        <% } %>
+                                                    <% } %>
+                                                    ><%= favfruit %></option>
                                             <% }); %>
                                         </select>
                                     </div>
@@ -83,6 +112,7 @@
                             </div>
                         </div>
                         <div class="card-footer float-right">
+                            <a href="/persons/1" class="btn btn-primary">Reset</a>
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
                     </form>
@@ -128,7 +158,7 @@
                                 <% if (current == 1) { %>
                                     <li class="page-item"><a class="page-link" href="javascript:void(0);">First</a></li>
                                 <% } else { %>
-                                    <li class="page-item"><a  class="page-link" href="/persons/1?name=<%= filters.name %>&age=<%= filters.age %>&gender=<%= filters.gender %>&isActive=<%= filters.isActive %>&eyeColor=<%= color %>&favoriteFruit=<%= fruit %>">First</a></li>
+                                    <li class="page-item"><a  class="page-link" href="/persons/1?<%= filters %>">First</a></li>
                                 <% } %>
                                 <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
                                 <% if (i !== 1) { %>
@@ -138,7 +168,7 @@
                                     <% if (i == current) { %>
                                         <li class="page-item active"><a class="page-link" href="javascript:void(0);"><%= i %></a></li>
                                     <% } else { %>
-                                        <li class="page-item"><a class="page-link" href="/persons/<%= i %>?name=<%= filters.name %>&age=<%= filters.age %>&gender=<%= filters.gender %>&isActive=<%= filters.isActive %>&eyeColor=<%= color %>&favoriteFruit=<%= fruit %>"><%= i %></a></li>
+                                        <li class="page-item"><a class="page-link" href="/persons/<%= i %>?<%= filters %>"><%= i %></a></li>
                                     <% } %>
                                     <% if (i == Number(current) + 4 && i < pages) { %>
                                         <li class="disabled"><a>...</a></li>
@@ -147,7 +177,7 @@
                                 <% if (current == pages) { %>
                                     <li class="page-item"><a class="page-link" href="javascript:void(0);">Last</a></li>
                                 <% } else { %>
-                                    <li  class="page-item"><a class="page-link" href="/persons/<%= pages %>?name=<%= filters.name %>&age=<%= filters.age %>&gender=<%= filters.gender %>&isActive=<%= filters.isActive %>&eyeColor=<%= color %>&favoriteFruit=<%= fruit %>">Last</a></li>
+                                    <li  class="page-item"><a class="page-link" href="/persons/<%= pages %>?<%= filters %>">Last</a></li>
                                 <% } %>
                             </ul>
                         <% } %>
