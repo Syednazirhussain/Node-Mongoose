@@ -9,9 +9,11 @@ const client = new MongoClient(url, {
 });
 
 exports.personIndex = async (req, res) => {
+
   try {
-    let perPage = 10;
-    let page = req.params.page || 1;
+
+    let perPage = 10
+    let page = req.params.page || 1
 
     let personsObj = {}
     let color
@@ -22,17 +24,21 @@ exports.personIndex = async (req, res) => {
     if (inputData.name != '' && inputData.name != undefined) {
       personsObj.name = new RegExp('.*' + inputData.name + '.*')
     }
+
     if (inputData.age != '' && inputData.age != undefined) {
-        personsObj.age = parseInt(inputData.age)
+      personsObj.age = parseInt(inputData.age)
     }
+
     if (inputData.gender != '' && inputData.gender != undefined) {
-        personsObj.gender = inputData.gender
+      personsObj.gender = inputData.gender
     }
+
     if (inputData.isActive != '' && inputData.isActive != undefined) {
-        personsObj.isActive = JSON.parse(inputData.isActive)
+      personsObj.isActive = JSON.parse(inputData.isActive)
     }
+
     if (inputData.eyeColor != '' && inputData.eyeColor != undefined) {
-      
+
       if (Array.isArray(inputData.eyeColor)) {
         personsObj.eyeColor = { $in: inputData.eyeColor }
       } else {
@@ -41,8 +47,9 @@ exports.personIndex = async (req, res) => {
         personsObj.eyeColor = { $in: color }
       }
     }
+    
     if (inputData.favoriteFruit != '' && inputData.favoriteFruit != undefined) {
-     
+
       if (Array.isArray(inputData.favoriteFruit)) {
         personsObj.favoriteFruit = { $in: inputData.favoriteFruit }
       } else {
@@ -70,12 +77,12 @@ exports.personIndex = async (req, res) => {
       .db("node-mongoose")
       .collection("persons")
       .distinct("eyeColor")
-      
+
     let favfruits = await client
-    .db("node-mongoose")
-    .collection("persons")
-    .distinct("favoriteFruit")
-    
+      .db("node-mongoose")
+      .collection("persons")
+      .distinct("favoriteFruit")
+
     res.locals.data = inputData
     res.locals.filters = queryString.stringify(inputData)
 

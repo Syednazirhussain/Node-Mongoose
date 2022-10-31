@@ -84,8 +84,8 @@
                                             <% eyecolors.forEach(function(eyecolor) { %>
                                                 <option value="<%= eyecolor %>"
                                                     <% if(data.eyeColor) { %>
-                                                    <% if(data.eyeColor.includes(eyecolor)) { %>
-                                                        selected
+                                                        <% if(data.eyeColor.includes(eyecolor)) { %>
+                                                            selected
                                                         <% } %>
                                                     <% } %>
                                                     ><%= eyecolor %></option>
