@@ -1,12 +1,16 @@
 const express = require('express')
+const passport = require('passport')
 const trimRequest = require('trim-request')
+
 const uploadImage = require("../app/middleware/imageupload");
+
+require('./../config/passport-setup')
 
 const router = express.Router()
 
 /* ------------- Middleware ------------- */
 
-const { authenticateUser } = require('./../app/middleware/auth')
+const { authenticateUser, isLoggedIn } = require('./../app/middleware/auth')
 const validate = require('./../app/middleware/request-validate')
 
 /* ------------- Middleware ------------- */
@@ -14,6 +18,57 @@ const validate = require('./../app/middleware/request-validate')
 router.get('/', (req, res) => {
     res.redirect('/home')
 })
+
+/* ------------- Passport Social Signup ------------- */
+
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/login'
+    }),
+    (req, res) => {
+        if (req.user) {
+            req.session.user_id = req.user.id
+            req.session.name = req.user.name
+            req.session.email = req.user.email
+            req.session.image = req.user.image
+        }
+        res.redirect('/home');
+    }
+)
+
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+router.get('/facebook/callback', 
+    passport.authenticate('facebook', {
+        failureRedirect: '/login'
+    }),
+    (req, res) => {
+        if (req.user) {
+            req.session.user_id = req.user._json.id
+            req.session.name = req.user._json.name
+            req.session.email = req.user._json.email
+            req.session.image = req.user.photos[0].value
+        }
+        res.redirect('/home');
+    }
+);
+
+// app.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_emailaddress', 'r_liteprofile'] }));
+router.get('/auth/linkedin', passport.authenticate('linkedin', { state: 'sindh/karachi' }));
+router.get('/linkedin/callback',
+    passport.authenticate('linkedin', {
+        failureRedirect: '/login',
+    }), 
+    (req, res) => {
+        if (req.user) {
+            req.session.user_id = req.user.id
+            req.session.name = req.user.name
+            req.session.email = req.user.email
+            req.session.image = req.user.image
+        }
+        res.redirect('/home');
+    }
+);
 
 /* ------------- Home Controllers ------------- */
 
@@ -24,7 +79,7 @@ const {
 
 router.get(
     '/home', 
-    authenticateUser, 
+    authenticateUser,
     home
 )
 

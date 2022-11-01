@@ -27,6 +27,14 @@ const UserSchema = new mongoose.Schema({
     image: {
         type: String,
     },
+    provider_id: {
+        type: String,
+        default: null
+    },
+    provider: {
+        type: String,
+        default: 'local'
+    },
     role_id: {
         type: mongoose.ObjectId,
         required: [true, 'must associated with any role like admin, moderator, or user'],

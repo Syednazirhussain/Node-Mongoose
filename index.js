@@ -5,6 +5,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const path = require('path')
+const passport = require('passport')
 const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const session = require("express-session")
@@ -15,6 +16,9 @@ const { connectDB } = require('./database/mongoose')
 app.use(cors({ origin: '*' }))
 
 common_helper(app)
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // For parsing json
 app.use(
