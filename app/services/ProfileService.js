@@ -1,11 +1,9 @@
 const fs = require('fs')
-const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcrypt')
-const { checkPassword } = require('../middleware/auth')
+const { v4: uuidv4 } = require('uuid')
+const { ObjectId } = require('mongodb')
 
 const User = require('../model/User')
-const mailer = require('../helper/mailer')
-const { ObjectId } = require('mongodb')
 
 const edit = async ({ user_id }) => {
 
