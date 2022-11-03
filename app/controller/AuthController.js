@@ -9,7 +9,9 @@ exports.register = async (req, res) => {
     
     try {
 
-        let result = await authService.register(req)
+        const { name, email, password } = req.body
+
+        let result = await authService.register({ name, email, password })
 
         if (result.error == 1) { 
             req.flash('message', result.message)
@@ -28,15 +30,11 @@ exports.login = async (req, res) => {
     try {
 
         if (req.session.email === undefined || req.session.email === null) {
-
             res.status(StatusCodes.OK).render('auth/login')
         } else {
-
             res.redirect('/home')
         }
-
     } catch (error) {
-
         res.render('errors/500', { message: error.message })
     }
 }
@@ -45,8 +43,9 @@ exports.loginAttempt = async (req, res) => {
 
     try {
 
-        let result = await authService.login(req)
+        const { email, password } = req.body
 
+        let result = await authService.login({ email, password })
         if (result.error == 1) {
 
             req.flash('message', result.message)
@@ -80,7 +79,9 @@ exports.forgetPasswordView = async (req, res) => {
 
 exports.forgetPasswordPost = async (req, res) => {
 
-    let result = await authService.forgetPassword(req);
+    const email = req.body.email
+
+    let result = await authService.forgetPassword({ email })
     
     if (result.error == 1) {
         req.flash('message', result.message);
@@ -93,22 +94,27 @@ exports.forgetPasswordPost = async (req, res) => {
 
 // Reset Password View
 exports.resetPasswordView = async (req, res ) => {
-    let result = await authService.resetPasswordView(req);
 
+    const { email, token, val } = req.params
+
+    let value = val
+    let result = await authService.resetPasswordView({ email, token, value })
     if (result.error == 1) {
+
         req.flash('message',result.message);
         res.redirect("/forget-password");
     } else {
+
         res.render('auth/reset-password',{ email : result.email, val: result.val });
     }
-
 }
 
 // Reset Password View
 exports.resetPassword = async (req, res) => {
 
-    let result = await authService.resetPassword(req);
+    const { email, password } = req.body
 
+    let result = await authService.resetPassword({ email, password })
     if (result.error == 1) {
 
         req.flash('message', result.message)

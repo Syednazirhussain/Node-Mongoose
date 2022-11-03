@@ -1,17 +1,15 @@
 const fs = require('fs')
-const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcrypt')
-const { checkPassword } = require('../middleware/auth')
+const { v4: uuidv4 } = require('uuid')
+const { ObjectId } = require('mongodb')
 
 const User = require('./../model/User')
 const mailer = require('./../helper/mailer')
-const { ObjectId } = require('mongodb')
+const { checkPassword } = require('../middleware/auth')
 
-async function register(req, res) {
+const register = async ({ name, email, password }) => {
 
     try {
-
-        const { name, email, password } = req.body
 
         const register = await User.create({
             name: name, 
@@ -23,11 +21,9 @@ async function register(req, res) {
         let link = `${process.env.APP_BASE_PATH}`
 
         var html = fs.readFileSync(process.cwd() + '/views/emails/user-registration.ejs').toString()
-        
         html = html.replace('{{NAME}}', name)
         html = html.replace('{{URL}}', link)
 
-        // Send confirmation email
         await mailer.send(
             process.env.FROM_EMAIL,
             email,
@@ -36,20 +32,17 @@ async function register(req, res) {
         )
 
         return { error: 0, message: 'User registered successfully.' }
-
     } catch (error) {
+
         return { error: 1, message: error.message }
     }
 }
 
-async function login(req) {
+const login = async ({ email, password }) => {
 
     try {
 
-        const { email, password } = req.body
-    
         const userExist = await User.findOne({ email: email })
-
         if (!userExist) {
             return { error: 1, message: 'Email not exist' }
         }
@@ -66,20 +59,18 @@ async function login(req) {
         req.session.image = userExist.image
 
         req.app.locals.admin = userExist
-
         req.app.locals.fields = ''
 
         return { error: 0, message: 'Login Successfull' }
-
     } catch (error) {
+
         return { error: 1, message: error.message }
     }
 }
 
-async function forgetPassword(req) {
-    try {
+const forgetPassword = async ({ email }) => {
 
-        const email = req.body.email;
+    try {
 
         const userExist = await User.findOne({
             where: {
@@ -88,6 +79,7 @@ async function forgetPassword(req) {
         })
 
         if (userExist) {
+
             let token = new Buffer(uuidv4());
             let base64Token = token.toString('base64')
 
@@ -99,11 +91,9 @@ async function forgetPassword(req) {
             let buff = new Buffer(email);
             let base64data = buff.toString('base64');
 
-            // Html email body
             let link = `${process.env.APP_BASE_PATH}reset-password/${base64Token}/${base64data}/0`;
 
             var html = fs.readFileSync(process.cwd() + '/views/emails/reset-password.ejs').toString();
-
             html = html.replace('{{USERNAME}}', userExist.name);
             html = html.replace('{{LINK}}', link);
 
@@ -115,89 +105,73 @@ async function forgetPassword(req) {
                 html
             );
 
-            return {
-                error: 0, success: 'We have e-mailed your password reset link!. Please also check Junk/Spam folder as well.!'
-            }
+            return { error: 0, success: 'We have e-mailed your password reset link!. Please also check Junk/Spam folder as well.!' }
         } else {
-            return {
-                error: 1, message: 'Email does not exist.'
-            }
-        }
 
+            return { error: 1, message: 'Email does not exist.' }
+        }
     } catch (error) {
         return { error: 1, message: error.message }
     }
 }
 
-async function resetPasswordView(req, res) {
+const resetPasswordView = async ({ email, token, value }) => {
     
     try {
 
-        let buff = new Buffer(req.params.email, 'base64');
-        let email = buff.toString('ascii');
+        let buff = new Buffer(email, 'base64');
+        let emailASCII = buff.toString('ascii');
 
         const rec = await User.findOne({
             where: {
-                email: email,
-                token: req.params.token
+                email: emailASCII,
+                token: token
             }
         })
 
         if (rec) {
-            return {
-                email: email,
-                val: req.params.val
-            };
 
+            return { email: emailASCII, val: value }
         } else {
-            return {
-                error: 1, message: "Link has been expired, Please select forgot password again."
-            }
+
+            return { error: 1, message: "Link has been expired, Please select forgot password again." }
         }
     } catch (error) {
         return { error: 1, message: error.message }
     }
 }
 
-async function resetPassword(req, res) {
+const resetPassword = async ({ email, password }) => {
 
     try {
         
         let user = await User.findOne({
             where: {
-                email: req.body.email
+                email: email
             }
         })
         
         if (user) {
             
             let salt = await bcrypt.genSalt(10)
-            let hash = await bcrypt.hash(req.body.password, salt)
+            let hash = await bcrypt.hash(password, salt)
 
             await User.updateOne(
-                { email: req.body.email },
+                { email: email },
                 { password: hash } 
             )
 
             await User.updateOne(
-                { email: req.body.email },
+                { email: email },
                 { token: null } 
             )
 
-            return {
-                error: 0, 
-                success: "Password reset successfully. Please enter your credentials and login"
-            }
-
+            return { error: 0, success: "Password reset successfully. Please enter your credentials and login" }
         } else {
-
-            return {
-                error: 1, message: "Email does not exist."
-            }
+            return { error: 1, message: "Email does not exist." }
         }
 
     } catch (error) {
-
         return { error: 1, message: error.message, email: req.body.email }
     }
 }
@@ -209,4 +183,4 @@ module.exports = {
     forgetPassword,
     resetPasswordView,
     resetPassword
-};
+}
