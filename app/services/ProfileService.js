@@ -7,36 +7,33 @@ const User = require('../model/User')
 const mailer = require('../helper/mailer')
 const { ObjectId } = require('mongodb')
 
-const edit = async (req) => {
+const edit = async ({ user_id }) => {
 
     try {
 
-        const user = await User.findById(ObjectId(req.session.user_id))
+        const user = await User.findById(ObjectId(user_id))
         return { error: 0, user: user }
     } catch (error) {
-        
         return { error: 1, message: error.message }
     }
 }
 
-const update = async (req) => {
+const update = async ({ name, image, user_id }) => {
 
     try {
 
         let updateObj = {
-            name: req.body.name
+            name: name
         }
 
-        if (req.body.image !== undefined) {
-            updateObj['image'] = process.env.APP_BASE_PATH + req.body.image.path
+        if (image !== undefined) {
+            updateObj['image'] = process.env.APP_BASE_PATH + image.path
         }
 
-        await User.findByIdAndUpdate(ObjectId(req.session.user_id), updateObj)
+        await User.findByIdAndUpdate(ObjectId(user_id), updateObj)
 
         return { error: 0, message: "Profile Updated Successfully" }
-
     } catch (error) {
-
         return { error: 1, message: error.message }
     }
 }
