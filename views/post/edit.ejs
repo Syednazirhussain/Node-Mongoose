@@ -30,13 +30,13 @@
                         <% if(typeof post !=='undefined' ) { if (post != '') { %>
                         <form action="<%= url('post/update/'+post._id) %>" method="POST" enctype="multipart/form-data">
                             <div class="form-group text-center">
-                                <% if (post.hasOwnProperty('image')) { %>
+                                <% if (post.hasOwnProperty('image') && post.image != null) { %>
                                     <img id="blah" src="<%= url(post.image) %>" class="rounded">
                                 <% } else { %>
                                     <img id="blah" src="<%= url('public/images/uploadimage.png') %>" class="rounded">
                                 <% } %>
                                 <i class="fa fa-edit">
-                                    <input class="custom-file-input" accept="image/*" name="image" type="file" id="imgInp" />
+                                    <input accept="image/*" name="image" type="file" id="imgInp" />
                                 </i>
                             </div>
                             <div class="form-group">
@@ -58,7 +58,7 @@
                                     style="resize: none;"><%= post.body %></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="/posts" class="btn btn-default">Cancel</a>
+                            <a href="/posts/1" class="btn btn-default">Cancel</a>
                         </form>
                         <% } } %>
                     </div>

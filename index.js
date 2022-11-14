@@ -9,6 +9,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const session = require("express-session")
+const cookieParser = require('cookie-parser')
 const common_helper = require('./app/helper/common')
 
 const { connectDB } = require('./database/mongoose')
@@ -16,9 +17,6 @@ const { connectDB } = require('./database/mongoose')
 app.use(cors({ origin: '*' }))
 
 common_helper(app)
-
-app.use(passport.initialize())
-app.use(passport.session())
 
 // For parsing json
 app.use(
@@ -35,12 +33,39 @@ app.use(
     })
 )
 
-app.use(session({
-    secret: process.env.SESSION_SECRET,
+app.use(cookieParser())
+app.use(
+  session({
+    secret: "this_is_a_secret",
+    // store: pgSessionStorage,
     resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 600000000 }
-}))
+    saveUnitialized: true,
+    rolling: true, // forces resetting of max age
+    cookie: {
+      maxAge: 360000,
+      secure: false // this should be true only when you don't want to show it for security reason
+    }
+  })
+)
+app.use(passport.initialize())
+app.use(passport.session())
+
+// app.use(cookieParser())
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: true,
+//     saveUninitialized: true,
+//     cookie: { maxAge: 600000000 }
+// }))
+
+// app.use(passport.initialize())
+// app.use(passport.session())
+
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false
+// }))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))

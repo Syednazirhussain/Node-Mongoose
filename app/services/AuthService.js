@@ -53,15 +53,7 @@ const login = async ({ email, password }) => {
             return { error: 1, message: 'Invalid password' }
         }
 
-        req.session.user_id = userExist.id
-        req.session.name = userExist.name
-        req.session.email = userExist.email
-        req.session.image = userExist.image
-
-        req.app.locals.admin = userExist
-        req.app.locals.fields = ''
-
-        return { error: 0, message: 'Login Successfull' }
+        return { error: 0, message: 'Login Successfull', payload: { user: userExist } }
     } catch (error) {
 
         return { error: 1, message: error.message }

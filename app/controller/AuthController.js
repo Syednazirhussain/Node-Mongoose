@@ -52,6 +52,14 @@ exports.loginAttempt = async (req, res) => {
             res.redirect("/login")
         } else {
 
+            req.session.user_id = result.payload.user.id
+            req.session.name = result.payload.user.name
+            req.session.email = result.payload.user.email
+            req.session.image = result.payload.user.image
+    
+            req.app.locals.admin = result.payload.user
+            req.app.locals.fields = ''
+
             req.flash('info', 'Logged In Successfully.')
             res.redirect("/home")
         }
