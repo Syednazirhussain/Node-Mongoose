@@ -79,6 +79,48 @@ Metamask extension can be installed in your browsers.
     - Youtube (Dapp University)
 
 
+### RoadMap
+
+Blockchain (1-12)
+Crypto-currency
+Ethereum (1-12)
+Solidity
+
+### Blockchain Theory
+
+Mempool
+    -   Store transactions
+    -   It consist of group of miners to pick the transaction and try to create a block by solving it mathametical problem called proof of work.
+
+Byzantine Generals Problem
+
+It is a problem that can be seen in distributed computing.
+
+Consensus Protocol
+
+    -Hashing Algorithm
+    -Immutable Ledger
+    -Mining
+    -Distribute P2P network
+
+Consensus protocol protect in two ways
+
+    -Prevent Attacks
+    -Competing Chain Problem
+
+Types of Consensus Protocols
+
+    -Proof of Work (POW)
+    -Proof of Stake (POS)
+    -Others
+
+
+
+
+
+
+
+
 
 
 

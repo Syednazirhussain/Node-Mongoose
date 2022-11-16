@@ -34,38 +34,36 @@ app.use(
 )
 
 app.use(cookieParser())
-app.use(
-  session({
-    secret: "this_is_a_secret",
-    // store: pgSessionStorage,
+app.use(session({
+    secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUnitialized: true,
-    rolling: true, // forces resetting of max age
-    cookie: {
-      maxAge: 360000,
-      secure: false // this should be true only when you don't want to show it for security reason
-    }
-  })
-)
-app.use(passport.initialize())
-app.use(passport.session())
+    saveUninitialized: true,
+    cookie: { maxAge: 600000000 }
+}))
 
 // app.use(cookieParser())
-// app.use(session({
-//     secret: process.env.SESSION_SECRET,
+// app.use(
+//   session({
+//     secret: "this_is_a_secret",
+//     // store: pgSessionStorage,
 //     resave: true,
-//     saveUninitialized: true,
-//     cookie: { maxAge: 600000000 }
-// }))
-
-// app.use(passport.initialize())
-// app.use(passport.session())
+//     saveUnitialized: true,
+//     rolling: true, // forces resetting of max age
+//     cookie: {
+//       maxAge: 360000,
+//       secure: false // this should be true only when you don't want to show it for security reason
+//     }
+//   })
+// )
 
 // app.use(session({
 //     secret: process.env.SESSION_SECRET,
 //     resave: false,
 //     saveUninitialized: false
 // }))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))

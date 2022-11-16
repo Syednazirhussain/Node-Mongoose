@@ -27,13 +27,16 @@ router.get('/google/callback',
         failureRedirect: '/login'
     }),
     (req, res) => {
+        console.log(req.user);
         if (req.user) {
             req.session.user_id = req.user.id
             req.session.name = req.user.name
             req.session.email = req.user.email
-            req.session.image = req.user.image
+            req.session.image = req.user.photos[0].value
+
+            console.log("Social Response", req.session)
         }
-        res.redirect('/home');
+        res.redirect('/home')
     }
 )
 
