@@ -114,6 +114,15 @@ Types of Consensus Protocols
     -Proof of Stake (POS)
     -Others
 
+How Minig Works
+
+    -Nonce: The nonce is a number that blockchain miners are solving for.
+    -Target
+        - It is a number used in mining.
+        - It is a number that a block hash must be below for the block to be added on to the blockchain.
+        - The target adjusts every 2016 blocks (roughly two weeks) to try and ensure that blocks are mined once every 10 minutes on average.
+
+    
 
 
 

@@ -107,7 +107,7 @@ exports.postStore = async (req, res) => {
                 console.log(newPost)
             }
 
-            res.status(StatusCodes.OK).redirect('/posts')
+            res.status(StatusCodes.OK).redirect('/posts/1')
         }
 
     } catch (error) {
@@ -174,7 +174,7 @@ exports.postUpdate = async (req, res) => {
             console.log(post)
             
             req.flash('success', 'Post updated successfully')
-            res.status(StatusCodes.OK).redirect('/posts')
+            res.status(StatusCodes.OK).redirect('/posts/1')
         }
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
