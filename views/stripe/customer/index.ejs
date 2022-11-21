@@ -1,0 +1,98 @@
+<%- include('./../../layout/head') %>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
+                    <li class="breadcrumb-item active">Stripe Customer</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1><strong>Balance:</strong>&nbsp;$<%= balance.available[0].amount %></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <%- include('./../../layout/alert-messages') %>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">Stripe Customers</h3>
+                            <a href="/stripe/customer/create" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% customers.data.forEach((customer, index) => { %>
+                                <tr>
+                                    <td><%= (index + 1) %></td>
+                                    <td><%= customer.name %></td>
+                                    <td><%= customer.email %></td>
+                                    <td><%= customer.phone %></td>
+                                    <td>
+                                        <a href="/stripe/customer/edit/<%= customer.id %>" class="btn btn-primary">Edit</a>
+                                        <a href="javascript:void(0);" onclick="confirm('<%= customer.id %>')" class="btn btn-danger">Delete</a>
+                                        <form class="deleteCustomer" method="POST"></form>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('./../../layout/footer') %>
+
+<script>
+
+    function confirm (customer_id) {
+
+        Swal.fire({
+            title: 'Are you sure.?',
+            text: 'Do you want to delete customer:'+customer_id,
+            icon: 'question',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: 'No'
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                console.log("Confirmed")
+                let url = '/stripe/customer/delete/'+customer_id
+                $('.deleteCustomer').attr('action', url).submit()
+            } else if (result.isDenied) {
+                console.log("Denied")
+            }
+        })
+    }
+
+</script>
