@@ -70,6 +70,53 @@ router.get('/linkedin/callback',
     }
 );
 
+/* ------------- Stripe Controllers ------------- */
+
+const { 
+    stripeCustomerIndex,
+    stripeCustomerCreate,
+    stripeCustomerStore,
+    stripeCustomerEdit,
+    stripeCustomerUpdate,
+    stripeCustomerDelete
+} = require('./../app/controller/StripeCustomer')
+
+router.get(
+    '/stripe/customers/:page', 
+    authenticateUser,
+    stripeCustomerIndex
+)
+
+router.get(
+    '/stripe/customer/create', 
+    authenticateUser,
+    stripeCustomerCreate
+)
+
+router.post(
+    '/stripe/customer/store', 
+    authenticateUser,
+    stripeCustomerStore
+)
+
+router.get(
+    '/stripe/customer/edit/:id', 
+    authenticateUser,
+    stripeCustomerEdit
+)
+
+router.post(
+    '/stripe/customer/update/:id', 
+    authenticateUser,
+    stripeCustomerUpdate
+)
+
+router.post(
+    '/stripe/customer/delete/:id', 
+    authenticateUser,
+    stripeCustomerDelete
+)
+
 /* ------------- Home Controllers ------------- */
 
 const { 
