@@ -1,0 +1,120 @@
+<%- include('./../../layout/head') %>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Checkout</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
+                    <li class="breadcrumb-item active">Persons</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <%- include('./../../layout/alert-messages') %>
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            Customer
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" class="form-control" value="<%= customer.name %>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Email</label>
+                                <input type="text" name="email" class="form-control" value="<%= customer.email %>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Phone</label>
+                                <input type="text" name="phone" class="form-control" value="<%= customer.phone %>" disabled>
+                            </div>
+                            <hr>
+                            <h3><strong>Shipping Details</strong></h3>
+                            <div class="form-group">
+                                <label for="shipping_name">Recipient Name</label>
+                                <input id="shipping_name" type="text" name="shipping_name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="shipping_address">Address</label>
+                                <textarea class="form-control" name="shipping_address" id="shipping_address" style="resize: none;"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            Cart
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Items</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lenovo Thinpad</td>
+                                    <td>1</td>
+                                    <td>800</td>
+                                </tr>
+                                <td>RAM 16GB</td>
+                                    <td>2</td>
+                                    <td>1200</td>
+                                </tr>
+                                <td>SSD 128GM</td>
+                                    <td>1</td>
+                                    <td>1800</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Total</strong></td>
+                                    <td><strong>$3800</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <h3><strong>Card Details</strong></h3>
+                        <div class="form-group">
+                            <label for="card_number">Card Number</label>
+                            <input type="text" class="form-control" name="card_number" id="card_number">
+                        </div>
+                        <div class="form-group">
+                            <label for="card_month">Expiry Month</label>
+                            <input type="text" class="form-control" placeholder="MM" name="card_month" id="card_month" min="2">
+                        </div>
+                        <div class="form-group">
+                            <label for="card_year">Expiry Year<   /label>
+                            <input type="text" class="form-control" name="card_year" placeholder="YY" id="card_year" min="2">
+                        </div>
+                        <div class="form-group">
+                            <label for="card_cvc">CSV</label>
+                            <input type="text" class="form-control" name="card_cvc" id="card_cvc">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn pull-right">Proceed to Pay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('./../../layout/footer') %>

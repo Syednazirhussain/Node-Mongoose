@@ -283,8 +283,15 @@ router.post(
 /* ------------ Payment Controller ------------ */ 
 
 const { 
-    checkout
+    checkout,
+    stripeCheckout
 } = require('../app/controller/PaymentController')
+
+router.get(
+    '/stripe/checkout/:customer_id',
+    authenticateUser,
+    stripeCheckout
+)
 
 router.post(
     '/create-checkout-session',
