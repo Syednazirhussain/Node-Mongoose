@@ -94,6 +94,87 @@ exports.stripeCustomerEdit = async (req, res) => {
         const customer = await stripe.customers.retrieve(
             customer_id
         );
+        
+        const payment_id = 'pm_1M6qayAC3e2KVm2osgKVRR67'
+        const payment_intent_id = 'pi_3M6qxbAC3e2KVm2o19twPhcm'
+        
+        // Step Four
+        /*
+        // Refund reason should be ['fraudulent', 'requested_by_customer']
+        const refund = await stripe.refunds.create({
+            payment_intent: payment_intent_id,
+            reason: 'requested_by_customer'
+        });
+        */
+
+        // Step Three
+        /*
+        const paymentIntent = await stripe.paymentIntents.retrieve(
+            payment_intent_id
+        );
+
+        console.log("Payment Intent", paymentIntent);
+
+        const confirmPaymentIntent = await stripe.paymentIntents.confirm(
+            payment_intent_id,
+            { payment_method: payment_id }
+        );
+
+        console.log("confirmPaymentIntent", confirmPaymentIntent);
+        */
+
+        // Step Two
+        /*
+        const paymentMethod = await stripe.customers.listPaymentMethods(
+            customer_id,
+            { type: 'card' }
+        );
+
+        console.log("paymentMethodList", paymentMethod);
+        console.log("customer_id", customer_id);
+        
+        // Customer first payment method ID
+        // console.log(paymentMethod.data[0].id);
+
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: 2000,
+            currency: 'usd',
+            payment_method_types: ['card'],
+            customer: customer_id,
+            payment_method: payment_id
+        });
+
+        console.log("paymentIntent", paymentIntent);
+        console.log("payment_id", payment_id);
+        */
+
+        // Step One
+        /*
+        const paymentMethod = await stripe.paymentMethods.create({
+            type: 'card',
+            card: {
+                number: '4242424242424242',
+                exp_month: 11,
+                exp_year: 2023,
+                cvc: '314',
+            },
+        });
+
+        console.log(payment_id);
+
+        const paymentMethodAttach = await stripe.paymentMethods.attach(
+            payment_id,
+            { customer: customer_id }
+        );
+
+        console.log("paymentMethodAttach", paymentMethodAttach);
+
+        const paymentMethod = await stripe.paymentMethods.retrieve(
+            payment_id
+        );
+
+        console.log("paymentMethod", paymentMethod);
+        */
 
         res.status(StatusCodes.OK).render('stripe/customer/edit', {
             customer: customer

@@ -44,6 +44,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,10 +54,11 @@
                                     <td><%= customer.name %></td>
                                     <td><%= customer.email %></td>
                                     <td><%= customer.phone %></td>
-                                    <td>
-                                        <a href="/stripe/customer/edit/<%= customer.id %>" class="btn btn-primary">Edit</a>
-                                        <a href="javascript:void(0);" onclick="confirm('<%= customer.id %>')" class="btn btn-danger">Delete</a>
+                                    <td class="d-flex justify-between">
+                                        <a href="/stripe/customer/edit/<%= customer.id %>" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="javascript:void(0);" onclick="confirm('<%= customer.id %>')" class="btn btn-sm btn-danger">Delete</a>
                                         <form class="deleteCustomer" method="POST"></form>
+                                        <a href="/stripe/checkout/<%= customer.id %>" class="btn btn-sm btn-success">Checkout</a>
                                     </td>
                                 </tr>
                                 <% }) %>
