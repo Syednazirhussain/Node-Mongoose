@@ -122,9 +122,12 @@
                 <%- include('./../layout/alert-messages') %>
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">
-                            Persons
-                        </h3>
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">
+                                Persons
+                            </h3>
+                            <a href="<%= url('person/create') %>" class="btn btn-success">Add</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <table class="table table-striped">
@@ -136,6 +139,7 @@
                                     <th>Eye Color</th>
                                     <th>Favorite Fruit</th>
                                     <th>Is Active</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -147,6 +151,9 @@
                                     <td><%= person.eyeColor %></td>
                                     <td><%= person.favoriteFruit %></td>
                                     <td><%= person.isActive %></td>
+                                    <td>
+                                        <a href="<%= url('person/edit/'+person._id) %>" class="btn btn-sm btn-primary">Edit</a>
+                                    </td>
                                 </tr>
                                 <% }) %>
                             </tbody>
