@@ -1,0 +1,58 @@
+<%- include('./../layout/head') %>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/cards">Cards</a></li>
+                    <li class="breadcrumb-item active">Add Card</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Card</h3>
+                    </div>
+                    <%- include('./../layout/alert-messages') %>
+                    <div class="card-body">
+                        <form action="<%= url('card/store') %>" method="POST">
+                            <h3><strong>Card Details</strong></h3>
+                            <div class="form-group">
+                                <label for="number">Card Number</label>
+                                <input type="text" class="form-control" name="number" id="number" placeholder="Card Number">
+                            </div>
+                            <div class="form-group">
+                                <label for="exp_month">Expiry Month</label>
+                                <input type="text" class="form-control" placeholder="MM" name="exp_month" id="exp_month" min="2">
+                            </div>
+                            <div class="form-group">
+                                <label for="exp_year">Expiry Year</label>
+                                <input type="text" class="form-control" name="expiry_year" id="exp_year" placeholder="YY" min="2">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvc">CVC</label>
+                                <input type="text" class="form-control" name="cvc" id="cvc" placeholder="CVC" min="3">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn pull-right">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<%- include('./../layout/footer') %>

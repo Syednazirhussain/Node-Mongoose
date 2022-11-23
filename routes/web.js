@@ -253,7 +253,7 @@ const {
 } = require('../app/controller/PaymentController')
 
 router.get(
-    '/stripe/checkout/:customer_id',
+    '/stripe/checkout',
     authenticateUser,
     stripeCheckout
 )
@@ -262,6 +262,32 @@ router.post(
     '/create-checkout-session',
     authenticateUser,
     checkout
+)
+
+/* ------------ Card Controller ------------ */ 
+
+const { 
+    index,
+    create,
+    store,
+} = require('../app/controller/CardsController')
+
+router.get(
+    '/cards',
+    authenticateUser,
+    index
+)
+
+router.get(
+    '/card/add',
+    authenticateUser,
+    create
+)
+
+router.post(
+    '/card/store',
+    authenticateUser,
+    store
 )
 
 /* ------------ Auth Controller ------------ */ 
