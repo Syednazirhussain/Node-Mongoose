@@ -225,62 +225,86 @@ exports.personEdit = async (req, res) => {
       console.log(person);
 
 
-
       // Update object by adding key value in a particular array of objects
-      // let isUpdated = await client.db("node-mongoose")
-      //                         .collection('persons')
-      //                         .updateOne(
-      //                           // { _id: ObjectId(person_id) },
-      //                           {
-      //                             device_token: {
-      //                               $elemMatch: {
-      //                                 device_token: 'abcd1234'
-      //                               }
-      //                             }
-      //                           },
-      //                           {
-      //                             "$set": { "device_token.$.foo": "bar" }
-      //                           }
-      //                         )
+      /*
+      let isUpdated = await client.db("node-mongoose")
+                              .collection('persons')
+                              .updateOne(
+                                // { _id: ObjectId(person_id) },
+                                {
+                                  device_token: {
+                                    $elemMatch: {
+                                      device_token: 'abcd1234'
+                                    }
+                                  }
+                                },
+                                {
+                                  "$set": { "device_token.$.foo": "bar" }
+                                }
+                              )
+      */
 
       // Update object key in an array of objects
-      // let isUpdated = await client.db("node-mongoose")
-      //                         .collection('persons')
-      //                         .updateOne(
-      //                           // { _id: ObjectId(person_id) },
-      //                           {
-      //                             device_token: {
-      //                               $elemMatch: {
-      //                                 device_token: 7
-      //                               }
-      //                             }
-      //                           },
-      //                           {
-      //                             "$set": { "device_token.$.device_token": 'abcd1234' }
-      //                           }
-      //                         )
+      /*
+      let isUpdated = await client.db("node-mongoose")
+                              .collection('persons')
+                              .updateOne(
+                                // { _id: ObjectId(person_id) },
+                                {
+                                  device_token: {
+                                    $elemMatch: {
+                                      device_token: 7
+                                    }
+                                  }
+                                },
+                                {
+                                  "$set": { "device_token.$.device_token": 'abcd1234' }
+                                }
+                              )
+      */
 
-      /* Add item in array */
-      // let isUpdated = await client.db("node-mongoose")
-      //                         .collection('persons')
-      //                         .updateOne(
-      //                           { _id: ObjectId(person_id) },
-      //                           {
-      //                             // $push: {
-      //                             //   tags: "mamo"
-      //                             // }
-      //                           }
-      //                         )
+      /* Remove a particular object from array of object */
+      /*
+      let isUpdated = await client.db("node-mongoose")
+                                  .collection("persons")
+                                  .updateOne(
+                                    { _id: ObjectId(person_id) },
+                                    // { friends: { $elemMatch: { roll_no: '13b-058-bs' } } },
+                                    { $pull: { device_token: { foo: 'bar' } } }
+                                  )
+      */
+      // console.log(isUpdated);
 
       /* Remove elements from an array */
+      /*
       let isUpdated = await client.db("node-mongoose")
                               .collection('persons')
                               .updateOne(
                                 { _id: ObjectId(person_id) },
                                 // { $pull: { i: { $in: [ "m", "o" ] } } }
                                 // { $unset : { bar : 1 } }
-                                { $unset : { x : 1 } } // this is an array of elements
+                                { $unset : { i : 1 } } // this is an array of elements
                               )
+      */
+
+
+
+      // Add array of objects
+      /*
+      let isUpdated = await client.db("node-mongoose")
+                                  .collection("persons")
+                                  .updateOne(
+                                    { _id: ObjectId(person_id) },
+                                    { $set: { friends: [
+                                          { name: 'Hamza', roll_no: '13b-034-bs' },
+                                          { name: 'Onais', roll_no: '13b-041-bs' },
+                                          { name: 'Taha', roll_no: '13b-058-bs' },
+                                        ]
+                                      } 
+                                    }
+                                  )
+      console.log(isUpdated);
+      */
 
       /* Add new array of item */
       /*
@@ -322,10 +346,6 @@ exports.personEdit = async (req, res) => {
       //                             },
       //                           }
       //                         )
-
-
-
-      console.log(isUpdated);
 
     }
 
