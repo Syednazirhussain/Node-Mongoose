@@ -160,7 +160,8 @@ const {
     personIndex,
     personCreate,
     personStore,
-    personEdit
+    personEdit,
+    personUpdate
 } = require('./../app/controller/PersonController')
 
 router.get(
@@ -185,6 +186,12 @@ router.get(
     '/person/edit/:id',
     authenticateUser,
     personEdit
+)
+
+router.post(
+    '/person/update/:id',
+    authenticateUser,
+    personUpdate
 )
 
 /* ------------ User Controller ------------ */ 

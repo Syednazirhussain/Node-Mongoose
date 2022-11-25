@@ -216,14 +216,13 @@ exports.personEdit = async (req, res) => {
 
     if (ObjectId.isValid(person_id)) {
       
-      console.log("Person ID: ", person_id);
+      let eyeColor = ["green", "blue", "brown"]
+      let fruit = ["banana", "apple", "strawberry"]
+
 
       let person = await client.db("node-mongoose")
                               .collection('persons')
                               .findOne({ _id: ObjectId(person_id) })
-
-      console.log(person);
-
 
       // Update object by adding key value in a particular array of objects
       /*
@@ -347,11 +346,68 @@ exports.personEdit = async (req, res) => {
       //                           }
       //                         )
 
+      console.log(person);
+      res.status(StatusCodes.OK).render('person/edit', { fruit, eyeColor, person })
+    } else {
+
+      req.flash("error", "Person not found")
+      res.status(StatusCodes.OK).redirect('/persons/1')
     }
 
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+  }
+}
 
-    req.flash("success", "Person updated successfully")
-    res.status(StatusCodes.OK).redirect('/persons/1')
+exports.personUpdate = async (req, res) => {
+  try {
+    
+    const person_id = req.params.id
+    const inputs = req.body
+
+    if (ObjectId.isValid(person_id)) {
+
+      console.log(person_id);
+      console.log(inputs);
+
+      let isActive = false
+      if (inputs.hasOwnProperty('isActive')) {
+        isActive = true
+      }
+
+
+      let result = await client.db('node-mongoose')
+              .collection('persons')
+              .findOneAndUpdate(
+                {
+                  _id: ObjectId(person_id)
+                },
+                {
+                  $set: {
+                    name: inputs.name,
+                    age: inputs.age,
+                    gender: inputs.gender,
+                    eyeColor: inputs.eyeColor,
+                    favoriteFruit: inputs.fruit,
+                    tags: inputs.tags.split(" "),
+                    isActive: isActive,
+                    'company.title': inputs.title,
+                    'company.email': inputs.email,
+                    'company.phone': inputs.phone,
+                    'company.location.country': inputs.country,
+                    'company.location.country': inputs.address
+                  }
+                }
+              )
+
+  
+      req.flash("success", "Person updated successfully")
+      res.status(StatusCodes.OK).redirect("/persons/1")
+    } else {
+
+      req.flash("error", "Person not found")
+      res.status(StatusCodes.NOT_FOUND).redirect("/persons/1")
+    }
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
   }
