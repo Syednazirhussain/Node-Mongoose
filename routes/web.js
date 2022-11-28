@@ -161,7 +161,8 @@ const {
     personCreate,
     personStore,
     personEdit,
-    personUpdate
+    personUpdate,
+    emailCSV
 } = require('./../app/controller/PersonController')
 
 router.get(
@@ -192,6 +193,12 @@ router.post(
     '/person/update/:id',
     authenticateUser,
     personUpdate
+)
+
+router.get(
+    '/person/email/csv',
+    authenticateUser,
+    emailCSV
 )
 
 /* ------------ User Controller ------------ */ 

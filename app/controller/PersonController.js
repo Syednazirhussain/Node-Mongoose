@@ -3,6 +3,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 const { StatusCodes } = require("http-status-codes");
 
 const queryString = require('query-string');
+const personService = require('./../services/PersonService')
 
 const url = process.env.DB_URI;
 const client = new MongoClient(url, {
@@ -410,5 +411,54 @@ exports.personUpdate = async (req, res) => {
     }
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+  }
+}
+
+exports.personDelete = async (req, res) => {
+  try {
+    
+    const person_id = req.params.id
+    if (ObjectId.isValid(person_id)) {
+
+      await client.db("node-mongoose")
+                  .collection("persons")
+                  .deleteOne(
+                    { _id: ObjectId(person_id) }
+                  )
+
+      req.flash("status", "Person deleted successfully")
+      res.status(StatusCodes.OK).redirect("/persons/1")
+    } else {
+      
+      req.flash("error", "Person not found")
+      res.status(StatusCodes.OK).redirect("/persons/1")
+    }
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("errors/500", { message: error.message })
+  }
+}
+
+exports.emailCSV = async (req, res) => {
+  
+  try {
+      
+    let persons = await client.db("node-mongoose")
+                              .collection("persons")
+                              .find({})
+                              .toArray()
+
+    let loggedInUser = { name: req.session.name, email: req.session.email }
+
+    const response = personService.emailPersonCSV(persons, loggedInUser)
+    console.log(response);
+    if (response.error == 1) {
+      req.flash("error", response.message)
+    } else {
+      req.flash("success", response.message)
+    }
+
+    res.status(StatusCodes.TEMPORARY_REDIRECT).redirect("/persons/1")
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("errors/500", { message: error.message })
   }
 }

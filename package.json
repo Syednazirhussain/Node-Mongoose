@@ -43,6 +43,7 @@
     "passport-oauth2": "^1.5.0",
     "passport-twitter": "^1.0.4",
     "path": "^0.12.7",
+    "pdf-creator-node": "^2.3.5",
     "query-string": "^7.1.1",
     "stripe": "^10.14.0",
     "trim-request": "^1.0.6",
