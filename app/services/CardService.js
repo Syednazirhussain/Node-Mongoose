@@ -6,27 +6,28 @@ const client = new MongoClient(url, {
   useUnifiedTopology: true,
 })
 
-const store = async ({ details }) => {
+const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
 
   try {
 
     const paymentMethod = await stripe.paymentMethods.create({
       type: 'card',
       card: {
-        number: details.number,
-        exp_month: details.exp_month,
-        exp_year: details.exp_year,
-        cvc: details.cvc,
+        number: number,
+        exp_month: exp_month,
+        exp_year: exp_year,
+        cvc: cvc,
       },
     })
 
     if (paymentMethod.data != '') {
      
-      await client.db("node-mongoose").collection('users').insertOne(
+      await client.db("node-mongoose").collection('cards').insertOne(
         {
           type: 'card',
-          user_id: ObjectId(req.session.user_id),
-          payment_method_id: paymentMethod.id
+          user_id: ObjectId(user_id),
+          payment_method_id: paymentMethod.id,
+          status: false
         })
     }
 
@@ -37,6 +38,23 @@ const store = async ({ details }) => {
   }
 }
 
-module.exports = {
-  store
+async function UpdateStatus({ _id, value }) {
+  try {
+
+    let status = (value.toLowerCase() === 'true')
+
+      await client.db('node-mongoose').collection('cards').updateOne({
+              _id: new ObjectId(_id)
+          },
+          {
+              $set: { status: status }
+          })
+      return {
+          error: 0, message: "Card Status updated successfully"
+      }
+  } catch (err) {
+      return {
+          error: 1, message: err.message
+      }
+  }
 }
