@@ -270,6 +270,7 @@ const {
     index,
     create,
     store,
+    UpdateStatus,
 } = require('../app/controller/CardsController')
 
 router.get(
@@ -288,6 +289,12 @@ router.post(
     '/card/store',
     authenticateUser,
     store
+)
+
+router.get(
+    '/update-status/:id/:status',
+    authenticateUser,
+    UpdateStatus
 )
 
 /* ------------ Auth Controller ------------ */ 
