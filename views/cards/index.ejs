@@ -47,7 +47,7 @@
                                     <td><%= card.user_id %></td>
                                     <td><%= card.payment_method_id %></td>
                                     <td><% if(card.status == false) { %>
-                                        <a href="<%= url('card/active') %>/<%= card._id %>/true" class="btn btn-block btn-primary" style="width:100px;">Activate</a>
+                                        <a href="<%= url('update-status') %>/<%= card._id %>/true" class="btn btn-block btn-primary" style="width:100px;">Activate</a>
                                       <% } %></td>
                                 </tr>
                                 <% }) %>

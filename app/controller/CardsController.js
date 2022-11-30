@@ -58,23 +58,26 @@ exports.store = async (req, res) => {
     if (result.error == 1) {
       res.json({ error: 1, message: result.message })
     } else {
+      req.flash('success', result.message)
       res.status(StatusCodes.OK).redirect('/cards')
     }
 
   } catch (error) { 
-      res.render("errors/500", { message: error.message })
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).render("errors/500", { message: error.message })
   }
 }
 
 exports.UpdateStatus = async (req, res) => {
 
-  let { _id, value } = { ...req.params }
+  let { id, status } = { ...req.params }
 
-  let result = await cardService.UpdateStatus({ _id, value })
+  let result = await cardService.StatusUpdate({ id, status })
 
   if (result.error == 1) {
-      res.json({ error: 1, message: result.message })
+      req.flash('error', result.message)
+      res.status(StatusCodes.Ok).redirect('/cards')
   } else {
+      req.flash('success', result.message)
       res.status(StatusCodes.OK).redirect('/cards')
   }
 }

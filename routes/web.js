@@ -249,7 +249,8 @@ router.post(
 
 const { 
     checkout,
-    stripeCheckout
+    stripeCheckout,
+    pay
 } = require('../app/controller/PaymentController')
 
 router.get(
@@ -262,6 +263,12 @@ router.post(
     '/create-checkout-session',
     authenticateUser,
     checkout
+)
+
+router.get(
+    '/stripe/pay',
+    authenticateUser,
+    pay
 )
 
 /* ------------ Card Controller ------------ */ 
