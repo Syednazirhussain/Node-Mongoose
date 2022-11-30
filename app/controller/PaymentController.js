@@ -29,74 +29,37 @@ exports.checkout = async (req, res) => {
 
 exports.stripeCheckout = async (req, res) => {
   try {
-
-    let customer_id
-    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(req.session.user_id) })
-
-    if (user.customer_id != undefined) {
-
-      customer_id = user.customer_id
-      
-    } else {
-      
-      const createCustomer = await stripe.customers.create({
-        description: 'New Customer',
-      })
     
-      customer_id = createCustomer.id
-
-      await client.db("node-mongoose").collection('users').updateOne(
-        { _id: ObjectId(user._id) },
-        {
-          $set: {
-            customer_id: customer_id
-          }
-        }
-    )
-
-    }
-
-    const customer = await stripe.customers.retrieve(
-      customer_id
-    )
-
-    const customerPM = await stripe.customers.listPaymentMethods(
-      customer_id,
-      {type: 'card'}
-    )
-
-    if (customerPM.data == '') {
-
-      const setupIntent = await stripe.setupIntents.create({
-        payment_method_types: ['card']
-      })
-      
-      const confirmIntent = await stripe.setupIntents.confirm(
-          setupIntent.id,
-          {payment_method: 'pm_card_visa'}
-      )
-        
-      console.log(confirmIntent)
-      
-      if (confirmIntent.status == 'succeeded') {
-        
-        await stripe.paymentMethods.attach(
-            confirmIntent.payment_method,
-            {customer: customer_id}
-          )
-      }
-    }
-
-    const paymentMethods = await stripe.customers.listPaymentMethods(
-      customer_id,
-      {type: 'card'}
-    )
-
-    console.log(paymentMethods)
+    let customer = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(req.session.user_id) })
 
     res.status(StatusCodes.OK).render('stripe/payments/checkout', {
-      customer: customer
+      customer
     })
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
+  }
+}
+
+exports.pay = async (req, res) => {
+  try {
+    
+    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(req.session.user_id) })
+    let activeCard = await client.db('node-mongoose').collection('cards').findOne({ user_id: ObjectId(user._id), status: true })
+
+    let result = await paymentService.pay({ user, activeCard })
+
+    if (result.error == 1) { 
+      req.flash("error", result.message)
+      res.status(StatusCodes.OK).render('stripe/payments/checkout', {
+        user
+      })
+    }
+    else {
+      req.flash("success", result.message)
+      res.status(StatusCodes.OK).render('stripe/payments/checkout', {
+        user
+      })
+    }
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
   }

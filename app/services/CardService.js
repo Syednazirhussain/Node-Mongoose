@@ -10,6 +10,33 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
 
   try {
 
+    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(user_id) })
+
+    let customer_id
+
+    if (user.customer_id != undefined) {
+
+      customer_id = user.customer_id
+      
+    } else {
+      
+      const createCustomer = await stripe.customers.create({
+        description: 'New Customer',
+      })
+    
+      customer_id = createCustomer.id
+
+      await client.db("node-mongoose").collection('users').updateOne(
+        { _id: ObjectId(user._id) },
+        {
+          $set: {
+            customer_id: customer_id
+          }
+        }
+    )
+
+    }
+
     const paymentMethod = await stripe.paymentMethods.create({
       type: 'card',
       card: {
@@ -19,6 +46,11 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
         cvc: cvc,
       },
     })
+
+    await stripe.paymentMethods.attach(
+          paymentMethod.id,
+          {customer: customer_id}
+    )
 
     if (paymentMethod.data != '') {
      
@@ -38,16 +70,21 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
   }
 }
 
-async function UpdateStatus({ _id, value }) {
+const StatusUpdate = async ({ id, status }) => {
   try {
 
-    let status = (value.toLowerCase() === 'true')
+    await client.db('node-mongoose').collection('cards').updateMany({},
+    {
+        $set: { status: false }
+    })
+
+    let val = (status.toLowerCase() === 'true')
 
       await client.db('node-mongoose').collection('cards').updateOne({
-              _id: new ObjectId(_id)
+              _id: new ObjectId(id)
           },
           {
-              $set: { status: status }
+              $set: { status: val }
           })
       return {
           error: 0, message: "Card Status updated successfully"
@@ -57,4 +94,9 @@ async function UpdateStatus({ _id, value }) {
           error: 1, message: err.message
       }
   }
+}
+
+module.exports = {
+  store,
+  StatusUpdate
 }
