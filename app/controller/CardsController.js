@@ -23,7 +23,7 @@ exports.index = async (req, res) => {
     .toArray()
 
     if (result == null) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: 1, message: 'Error Occurred' })
+      res.status(StatusCodes.BAD_REQUEST).render('errors/500', { message: 'Error Occurred' })
     } else {
         res.status(StatusCodes.OK).render('cards/index', {
             cards: result,
@@ -56,7 +56,8 @@ exports.store = async (req, res) => {
     let result = await cardService.store({ number, exp_month, exp_year, cvc, user_id })
 
     if (result.error == 1) {
-      res.json({ error: 1, message: result.message })
+      req.flash('error', result.message)
+      res.status(StatusCodes.OK).redirect('/cards')
     } else {
       req.flash('success', result.message)
       res.status(StatusCodes.OK).redirect('/cards')
@@ -75,7 +76,7 @@ exports.UpdateStatus = async (req, res) => {
 
   if (result.error == 1) {
       req.flash('error', result.message)
-      res.status(StatusCodes.Ok).redirect('/cards')
+      res.status(StatusCodes.OK).redirect('/cards')
   } else {
       req.flash('success', result.message)
       res.status(StatusCodes.OK).redirect('/cards')

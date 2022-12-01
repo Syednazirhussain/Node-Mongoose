@@ -53,13 +53,18 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
     )
 
     if (paymentMethod.data != '') {
+
+      await client.db('node-mongoose').collection('cards').updateMany({},
+        {
+          $set: { status: false }
+        })
      
       await client.db("node-mongoose").collection('cards').insertOne(
         {
           type: 'card',
           user_id: ObjectId(user_id),
           payment_method_id: paymentMethod.id,
-          status: false
+          status: true
         })
     }
 

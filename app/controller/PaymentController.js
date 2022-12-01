@@ -56,9 +56,7 @@ exports.pay = async (req, res) => {
     }
     else {
       req.flash("success", result.message)
-      res.status(StatusCodes.OK).render('stripe/payments/checkout', {
-        user
-      })
+      res.status(StatusCodes.OK).render('stripe/payments/checkout')
     }
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
