@@ -13,4 +13,8 @@ module.exports = (app) => {
     global.admin = (admin = '') => {
         return admin;
     }
+
+    global.upperCase = (value) => {
+        return value.toUpperCase()
+    }
 }

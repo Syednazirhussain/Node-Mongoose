@@ -204,13 +204,48 @@ router.post(
 /* ------------ Person Controller ------------ */ 
 
 const { 
-    personIndex
+    personIndex,
+    personCreate,
+    personStore,
+    personEdit,
+    personUpdate,
+    emailCSV
 } = require('./../app/controller/PersonController')
 
 router.get(
     '/persons/:page/:value?',
     authenticateUser,
     personIndex
+)
+
+router.get(
+    '/person/create',
+    authenticateUser,
+    personCreate
+)
+
+router.post(
+    '/person/store',
+    authenticateUser,
+    personStore
+)
+
+router.get(
+    '/person/edit/:id',
+    authenticateUser,
+    personEdit
+)
+
+router.post(
+    '/person/update/:id',
+    authenticateUser,
+    personUpdate
+)
+
+router.get(
+    '/person/email/csv',
+    authenticateUser,
+    emailCSV
 )
 
 /* ------------ User Controller ------------ */ 

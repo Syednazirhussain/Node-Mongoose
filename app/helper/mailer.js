@@ -11,15 +11,26 @@ let transporter = nodemailer.createTransport({
 	}
 });
 
-exports.send = async function (from, to, subject, html)
+exports.send = async function (from, to, subject, html, attachments = [])
 {
-	// send mail with defined transport object
-	// visit https://nodemailer.com/ for more options
-	return await transporter.sendMail({
-		from: from, // sender address e.g. no-reply@xyz.com or "Fred Foo 👻" <foo@example.com>
-		to: to, // list of receivers e.g. bar@example.com, baz@example.com
-		subject: subject, // Subject line e.g. 'Hello ✔'
-		//text: text, // plain text body e.g. Hello world?
-		html: html // html body e.g. '<b>Hello world?</b>'
-	});
+	if (attachments.length == 0) {
+
+		// send mail with defined transport object
+		// visit https://nodemailer.com/ for more options
+		return await transporter.sendMail({
+			from: from, // sender address e.g. no-reply@xyz.com or "Fred Foo 👻" <foo@example.com>
+			to: to, // list of receivers e.g. bar@example.com, baz@example.com
+			subject: subject, // Subject line e.g. 'Hello ✔'
+			//text: text, // plain text body e.g. Hello world?
+			html: html // html body e.g. '<b>Hello world?</b>'
+		});
+	} else {
+		return await transporter.sendMail({
+			from: from,
+			to: to,
+			subject: subject,
+			html: html,
+			attachments: attachments
+		})
+	}
 };

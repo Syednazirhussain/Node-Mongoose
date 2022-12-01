@@ -6,35 +6,29 @@ const client = new MongoClient(url, {
   useUnifiedTopology: true,
 })
 
-const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
+const store = async ({ number, exp_month, exp_year, cvc }, loggedInUser) => {
 
   try {
 
-    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(user_id) })
-
-    let customer_id
-
+    let customer_id = null
+    
+    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(loggedInUser.user_id) })    
     if (user.customer_id != undefined) {
 
       customer_id = user.customer_id
-      
     } else {
-      
+
       const createCustomer = await stripe.customers.create({
-        description: 'New Customer',
+        name: loggedInUser.name,
+        email: loggedInUser.email
       })
     
       customer_id = createCustomer.id
 
       await client.db("node-mongoose").collection('users').updateOne(
-        { _id: ObjectId(user._id) },
-        {
-          $set: {
-            customer_id: customer_id
-          }
-        }
-    )
-
+          { _id: ObjectId(user._id) },
+          { $set: { customer_id: customer_id } }
+      )
     }
 
     const paymentMethod = await stripe.paymentMethods.create({
@@ -48,8 +42,8 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
     })
 
     await stripe.paymentMethods.attach(
-          paymentMethod.id,
-          {customer: customer_id}
+      paymentMethod.id,
+      { customer: customer_id }
     )
 
     if (paymentMethod.data != '') {
@@ -62,7 +56,7 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
       await client.db("node-mongoose").collection('cards').insertOne(
         {
           type: 'card',
-          user_id: ObjectId(user_id),
+          user_id: ObjectId(loggedInUser.user_id),
           payment_method_id: paymentMethod.id,
           status: true
         })
@@ -70,7 +64,6 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
 
     return { error: 0, message: "Card Added Successfully" }
   } catch (error) {
-
     return { error: 1, message: error.message }
   }
 }
@@ -78,26 +71,26 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
 const StatusUpdate = async ({ id, status }) => {
   try {
 
-    await client.db('node-mongoose').collection('cards').updateMany({},
-    {
-        $set: { status: false }
-    })
+    await client.db('node-mongoose').collection('cards').updateMany(
+            {}, 
+            {
+              $set: { status: false }
+            }
+          )
 
     let val = (status.toLowerCase() === 'true')
 
-      await client.db('node-mongoose').collection('cards').updateOne({
-              _id: new ObjectId(id)
+    await client.db('node-mongoose').collection('cards').updateOne({
+            _id: new ObjectId(id)
           },
           {
-              $set: { status: val }
-          })
-      return {
-          error: 0, message: "Card Status updated successfully"
-      }
+            $set: { status: val }
+          }
+        )
+
+    return { error: 0, message: "Card Status updated successfully" }
   } catch (err) {
-      return {
-          error: 1, message: err.message
-      }
+      return { error: 1, message: err.message }
   }
 }
 
