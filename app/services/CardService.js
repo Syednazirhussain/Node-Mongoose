@@ -6,32 +6,29 @@ const client = new MongoClient(url, {
   useUnifiedTopology: true,
 })
 
-const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
+const store = async ({ number, exp_month, exp_year, cvc, loggedInUser }) => {
 
   try {
 
-    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(user_id) })
+    let customer_id = null
 
-    let customer_id
-
+    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(loggedInUser.user_id) })
+    
     if (user.customer_id != undefined) {
-
+    
       customer_id = user.customer_id
     } else {
-      
+
       const createCustomer = await stripe.customers.create({
-        description: 'New Customer',
+        name: loggedInUser.name,
+        email: loggedInUser.email
       })
     
       customer_id = createCustomer.id
 
       await client.db("node-mongoose").collection('users').updateOne(
           { _id: ObjectId(user._id) },
-          {
-            $set: {
-              customer_id: customer_id
-            }
-          }
+          { $set: { customer_id: customer_id } }
       )
     }
 
@@ -55,7 +52,7 @@ const store = async ({ number, exp_month, exp_year, cvc, user_id }) => {
       await client.db("node-mongoose").collection('cards').insertOne(
         {
           type: 'card',
-          user_id: ObjectId(user_id),
+          user_id: ObjectId(loggedInUser.user_id),
           payment_method_id: paymentMethod.id,
           status: false
         })

@@ -31,10 +31,7 @@ exports.stripeCheckout = async (req, res) => {
   try {
     
     let customer = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(req.session.user_id) })
-
-    res.status(StatusCodes.OK).render('stripe/payments/checkout', {
-      customer
-    })
+    res.status(StatusCodes.OK).render('stripe/payments/checkout', { customer })
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
   }
@@ -48,18 +45,13 @@ exports.pay = async (req, res) => {
 
     let result = await paymentService.pay({ user, activeCard })
 
-    if (result.error == 1) { 
+    if (result.error == 1) {
       req.flash("error", result.message)
-      res.status(StatusCodes.OK).render('stripe/payments/checkout', {
-        user
-      })
-    }
-    else {
+    } else {
       req.flash("success", result.message)
-      res.status(StatusCodes.OK).render('stripe/payments/checkout', {
-        user
-      })
     }
+
+    res.status(StatusCodes.PERMANENT_REDIRECT).redirect('/stripe/checkout')
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('errors/500', { message: error.message })
   }

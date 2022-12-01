@@ -29,18 +29,19 @@
                         </h3>
                     </div>
                     <div class="card-body">
+                        <% if(typeof customer !=='undefined' ) { if (customer != '') { %>
                         <form action="javascript:void(0);">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" class="form-control" value="" disabled>
+                                <input type="text" name="name" class="form-control" value="<%= customer.name %>" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="name">Email</label>
-                                <input type="text" name="email" class="form-control" value="" disabled>
+                                <input type="text" name="email" class="form-control" value="<%= customer.email %>" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="name">Phone</label>
-                                <input type="text" name="phone" class="form-control" value="" disabled>
+                                <input type="text" name="phone" class="form-control">
                             </div>
                             <hr>
                             <h3><strong>Shipping Details</strong></h3>
@@ -53,6 +54,7 @@
                                 <textarea class="form-control" name="shipping_address" id="shipping_address" style="resize: none;"></textarea>
                             </div>
                         </form>
+                        <% } } %>
                     </div>
                 </div>
             </div>
@@ -90,6 +92,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <!--
                         <hr>
                         <h3><strong>Card Details</strong></h3>
                         <div class="form-group">
@@ -108,7 +111,8 @@
                             <label for="card_cvc">CSV</label>
                             <input type="text" class="form-control" name="card_cvc" id="card_cvc">
                         </div>
-                        <a href="/stripe/pay" class="btn btn-primary btn pull-right">Proceed to Pay</a>
+                        -->
+                        <a href="<%= url('stripe/pay') %>" class="btn btn-primary btn pull-right">Proceed to Pay</a>
                     </div>
                 </div>
             </div>

@@ -50,10 +50,10 @@ exports.create = async (req, res) => {
 exports.store = async (req, res) => { 
   try {
     
-    let user_id = req.session.user_id
+    let user = { ...req.session }
     let { number, exp_month, exp_year, cvc } = { ...req.body }
 
-    let result = await cardService.store({ number, exp_month, exp_year, cvc, user_id })
+    let result = await cardService.store({ number, exp_month, exp_year, cvc, user })
 
     if (result.error == 1) {
       res.json({ error: 1, message: result.message })
