@@ -339,6 +339,25 @@ router.get(
     UpdateStatus
 )
 
+/* ------------ Transactions Controller ------------ */ 
+
+const { 
+    transactionsIndex,
+    refund
+} = require('../app/controller/TransactionsController')
+
+router.get(
+    '/transactions',
+    authenticateUser,
+    transactionsIndex
+)
+
+router.get(
+    '/refund/:intentId',
+    authenticateUser,
+    refund
+)
+
 /* ------------ Auth Controller ------------ */ 
 
 const { 

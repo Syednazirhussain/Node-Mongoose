@@ -46,6 +46,7 @@
     "pdf-creator-node": "^2.3.5",
     "query-string": "^7.1.1",
     "stripe": "^10.14.0",
+    "sweetalert2": "^11.6.15",
     "trim-request": "^1.0.6",
     "uuid": "^9.0.0",
     "validatorjs": "^3.22.1"
