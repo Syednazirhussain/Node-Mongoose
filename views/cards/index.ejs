@@ -34,8 +34,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Type</th>
-                                    <th>User Id</th>
-                                    <th>Payment Method Id</th>
+                                    <th>User</th>
+                                    <th>Payment Method</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -46,9 +46,13 @@
                                     <td><%= card.type %></td>
                                     <td><%= card.user_id %></td>
                                     <td><%= card.payment_method_id %></td>
-                                    <td><% if(card.status == false) { %>
-                                        <a href="<%= url('update-status') %>/<%= card._id %>/true" class="btn btn-block btn-primary" style="width:100px;">Activate</a>
-                                      <% } %></td>
+                                    <td>
+                                        <% if(card.status == false) { %>
+                                            <a href="<%= url('update-status') %>/<%= card._id %>/true" class="btn btn-block btn-primary" style="width:100px;">
+                                                Activate
+                                            </a>
+                                        <% } %>
+                                    </td>
                                 </tr>
                                 <% }) %>
                             </tbody>

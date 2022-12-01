@@ -6,16 +6,15 @@ const client = new MongoClient(url, {
   useUnifiedTopology: true,
 })
 
-const store = async ({ number, exp_month, exp_year, cvc, loggedInUser }) => {
+const store = async ({ number, exp_month, exp_year, cvc }, loggedInUser) => {
 
   try {
 
     let customer_id = null
-
-    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(loggedInUser.user_id) })
     
+    let user = await client.db('node-mongoose').collection('users').findOne({ _id: ObjectId(loggedInUser.user_id) })    
     if (user.customer_id != undefined) {
-    
+
       customer_id = user.customer_id
     } else {
 
@@ -76,14 +75,15 @@ const StatusUpdate = async ({ id, status }) => {
 
     let val = (status.toLowerCase() === 'true')
 
-      await client.db('node-mongoose').collection('cards').updateOne({
-              _id: new ObjectId(id)
+    await client.db('node-mongoose').collection('cards').updateOne({
+            _id: new ObjectId(id)
           },
           {
-              $set: { status: val }
-          })
+            $set: { status: val }
+          }
+        )
 
-      return { error: 0, message: "Card Status updated successfully" }
+    return { error: 0, message: "Card Status updated successfully" }
   } catch (err) {
       return { error: 1, message: err.message }
   }

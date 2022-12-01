@@ -45,20 +45,16 @@ const pay = async ({ user, activeCard }) => {
     let customer_id
 
     if ((user.customer_id != undefined) && (activeCard != null) ) {
-
       customer_id = user.customer_id
-      
     } else {
         return { error: 1, message: "Please add a card first and make sure it's active" }
     }
 
-    const customer = await stripe.customers.retrieve(
-      customer_id
-    )
+    const customer = await stripe.customers.retrieve(customer_id)
 
     const customerPM = await stripe.customers.listPaymentMethods(
       customer_id,
-      {type: 'card'}
+      { type: 'card' }
     )
 
     const paymentIntent = await stripe.paymentIntents.create({
@@ -69,15 +65,12 @@ const pay = async ({ user, activeCard }) => {
       confirm: true
     })
 
-    console.log(paymentIntent)
-
     if (paymentIntent.status == 'succeeded') {
         return { error: 0, message: "Payment processed successfully" }
     } else {
       return { error: 1, message: "Error occurred while processing the payment" }
     }
   } catch (error) {
-
     return { error: 1, message: error.message }
   }
 }
