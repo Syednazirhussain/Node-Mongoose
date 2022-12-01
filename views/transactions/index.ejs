@@ -55,7 +55,7 @@
                                     </td>
                                     <td>
                                         <% if(transaction.charges.data['0'].refunded == false) { %>
-                                            <a href="javascript:void(0);" onclick="confirm('<%= transaction.id %>')" class="btn btn-block btn-primary">
+                                            <a href="javascript:void(0);" onclick="confirm('<%= transaction.id %>')" class="btn btn-block btn-info">
                                                 Refund
                                             </a>
                                         <% } else { %>

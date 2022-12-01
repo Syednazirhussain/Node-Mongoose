@@ -8,19 +8,10 @@ const client = new MongoClient(url, {
     useUnifiedTopology: true
 })
 
-const Swal = require('sweetalert2')
-
 exports.transactionsIndex = async (req, res) => {
 
     try {
-        Swal.fire(
-            'Good job!',
-            'You clicked the button!',
-            'success'
-          )
         const paymentIntents = await stripe.paymentIntents.list({})
-
-        console.log(paymentIntents.data['9'].charges.data['0'].refunded)
         
         res.status(StatusCodes.OK).render('transactions/index', {
             transactions: paymentIntents.data
